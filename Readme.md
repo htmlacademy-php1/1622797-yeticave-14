@@ -1,7 +1,7 @@
 # Личный проект «YetiCave»
 
 * Студент: [Kirill Podryadov](https://up.htmlacademy.ru/php/14/user/1622797).
-* Наставник: `Неизвестно`.
+* Наставник: [Сергей Парфенов](https://htmlacademy.ru/profile/id926645).
 
 ---
 
