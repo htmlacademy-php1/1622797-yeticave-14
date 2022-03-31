@@ -62,19 +62,19 @@ $user_name = 'Кирилл';
             <li class="promo__item promo__item--boards">
                 <a class="promo__link" href="pages/all-lots.html"><?=$categories[0];?></a>
             </li>
-            <li class="promo__item promo__item--boards">
+            <li class="promo__item promo__item--attachment">
                 <a class="promo__link" href="pages/all-lots.html"><?=$categories[1];?></a>
             </li>
-            <li class="promo__item promo__item--boards">
+            <li class="promo__item promo__item--boots">
                 <a class="promo__link" href="pages/all-lots.html"><?=$categories[2];?></a>
             </li>
-            <li class="promo__item promo__item--boards">
+            <li class="promo__item promo__item--clothing">
                 <a class="promo__link" href="pages/all-lots.html"><?=$categories[3];?></a>
             </li>
-            <li class="promo__item promo__item--boards">
+            <li class="promo__item promo__item--tools">
                 <a class="promo__link" href="pages/all-lots.html"><?=$categories[4];?></a>
             </li>
-            <li class="promo__item promo__item--boards">
+            <li class="promo__item promo__item--other">
                 <a class="promo__link" href="pages/all-lots.html"><?=$categories[5];?></a>
             </li>
         </ul>
@@ -127,7 +127,7 @@ $user_name = 'Кирилл';
             <?php foreach ($products as $key => $val): ?>
             <li class="lots__item lot">
                 <div class="lot__image">
-                    <img src="<?=$val['url'];?>" width="350" height="260" alt="<?=$val['name'];?>">
+                    <img src="<?=$val['url'];?>" width="350" height="260" alt="">
                 </div>
                 <div class="lot__info">
                     <span class="lot__category"><?=$val['categories'];?></span>
