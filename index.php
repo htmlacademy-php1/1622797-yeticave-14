@@ -1,8 +1,8 @@
 <?php
 $is_auth = rand(0, 1);
 $user_name = 'Кирилл';
-$categories = [ "Доски и лыжи", "Крепления", "Ботинки", "Одежда", "Инструменты", "Разное" ];
-$products = [
+$categories = ["Доски и лыжи", "Крепления", "Ботинки", "Одежда", "Инструменты", "Разное"];
+$lots = [
                 [
                 'name' => '2014 Rossignol District Snowboard',
                 'categories' => 'Доски и лыжи',
@@ -39,7 +39,15 @@ $products = [
                 'price' => '5400',
                 'url' => 'img/lot-6.jpg'
                 ],
-            ]
+            ];
+
+function lotcost (int $price) :string {
+    if ($price < 1000) {
+        return ceil($price) . '₽';
+    } else {
+        return number_format($price, 0, null, ' ') . '₽';
+    }
+}
 ?>
 
 <!DOCTYPE html>
@@ -105,18 +113,18 @@ $products = [
             <h2>Открытые лоты</h2>
         </div>
         <ul class="lots__list">
-            <?php foreach ($products as $product): ?>
+            <?php foreach ($lots as $lot): ?>
             <li class="lots__item lot">
                 <div class="lot__image">
-                    <img src="<?=$product['url'];?>" width="350" height="260" alt="">
+                    <img src="<?=$lot['url'];?>" width="350" height="260" alt="">
                 </div>
                 <div class="lot__info">
-                    <span class="lot__category"><?=$product['categories'];?></span>
-                    <h3 class="lot__title"><a class="text-link" href="pages/lot.html"><?=$product['name'];?></a></h3>
+                    <span class="lot__category"><?=$lot['categories'];?></span>
+                    <h3 class="lot__title"><a class="text-link" href="pages/lot.html"><?=$lot['name'];?></a></h3>
                     <div class="lot__state">
                         <div class="lot__rate">
                             <span class="lot__amount">Стартовая цена</span>
-                            <span class="lot__cost"><?=$product['price']?><b class="rub">р</b></span>
+                            <span class="lot__cost"><?=lotcost($lot['price']) ?></span>
                         </div>
                         <div class="lot__timer timer">
                             12:23
