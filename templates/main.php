@@ -27,8 +27,9 @@
                             <span class="lot__amount">Стартовая цена</span>
                             <span class="lot__cost"><?=lotcost($lot['price']) ?></span>
                         </div>
-                        <div class="lot__timer timer">
-                            12:23
+                        <?php $interval = get_dt_range($lot['closetime'], date('Y-m-d H:i:s')); ?>
+                        <div class="lot__timer timer <?php if($interval['hour']<1){echo 'timer--finishing';}?> ">
+                            <?=$interval['hour']?>:<?=$interval['minute']?>
                         </div>
                     </div>
                 </div>
