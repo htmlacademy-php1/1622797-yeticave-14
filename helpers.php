@@ -144,3 +144,15 @@ function include_template($name, array $data = []) {
 }
 
 
+
+function get_dt_range(string $closetime, string $curtime): array {
+    $dt_diff = strtotime($closetime) - strtotime($curtime);
+    if($dt_diff < 0) {
+        $interval = ['hour' => 0, 'minute' => 0];
+        return $interval;
+    }
+    $hours = floor($dt_diff / 3600);
+    $minuts = floor($dt_diff % 3600 / 60);
+    $interval = ['hour' => $hours, 'minute' => $minuts];
+    return $interval;
+}
