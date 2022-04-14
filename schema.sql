@@ -3,14 +3,14 @@ USE yeti;
 
 CREATE TABLE categories  (
   id int AUTO_INCREMENT PRIMARY KEY,
-  name_cat varchar(64) NOT NULL,
+  name varchar(64) NOT NULL,
   symbol_code varchar(64) NOT NULL UNIQUE
 );
 
 CREATE TABLE lots (
    id int AUTO_INCREMENT PRIMARY KEY,
    creation_time datetime NOT NULL,
-   name_lots varchar(122) NOT NULL,
+   name varchar(122) NOT NULL,
    description varchar(255),
    img varchar(255),
    begin_price int NOT NULL,
@@ -36,6 +36,4 @@ CREATE TABLE users (
   user_name varchar(64) NOT NULL,
   password varchar(64) NOT NULL,
   contact varchar(122) NOT NULL,
-  lot_id int NOT NULL REFERENCES lots(id),
-  bet_id int NOT NULL REFERENCES bets(id)
 );
