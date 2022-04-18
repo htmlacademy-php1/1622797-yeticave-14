@@ -25,8 +25,8 @@ CREATE TABLE bets (
    id int AUTO_INCREMENT PRIMARY KEY,
    creation_time datetime NOT NULL,
    price int NOT NULL,
-   user_id int REFERENCES users(id),
-   lot_id int REFERENCES lots(id)
+   user_id int NOT NULL REFERENCES users(id),
+   lot_id int NOT NULL REFERENCES lots(id)
 );
 
 CREATE TABLE users (
@@ -35,5 +35,5 @@ CREATE TABLE users (
   email varchar(64) NOT NULL UNIQUE,
   user_name varchar(64) NOT NULL,
   password varchar(64) NOT NULL,
-  contact varchar(122) NOT NULL,
+  contact varchar(122) NOT NULL
 );
