@@ -4,7 +4,7 @@ USE yeti;
 CREATE TABLE categories  (
   id int AUTO_INCREMENT PRIMARY KEY,
   name varchar(64) NOT NULL,
-  symbol_code varchar(64) NOT NULL UNIQUE
+  code varchar(64) NOT NULL UNIQUE
 );
 
 CREATE TABLE lots (
