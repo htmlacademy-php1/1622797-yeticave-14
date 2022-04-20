@@ -3,8 +3,8 @@
         <p class="promo__text">На нашем интернет-аукционе ты найдёшь самое эксклюзивное сноубордическое и горнолыжное снаряжение.</p>
         <ul class="promo__list">
             <?php foreach ($categories as $category): ?>
-            <li class="promo__item promo__item--boards">
-                <a class="promo__link" href="pages/all-lots.html"><?=$category;?></a>
+            <li class="promo__item promo__item--<?= $category['code']; ?>">
+                <a class="promo__link" href="pages/all-lots.html"><?= $category['name']; ?></a>
             </li>
             <?php endforeach; ?>
         </ul>
@@ -17,19 +17,19 @@
             <?php foreach ($lots as $lot): ?>
             <li class="lots__item lot">
                 <div class="lot__image">
-                    <img src="<?=htmlspecialchars($lot['url']);?>" width="350" height="260" alt="">
+                    <img src="<?= htmlspecialchars($lot['img']); ?>" width="350" height="260" alt="">
                 </div>
                 <div class="lot__info">
-                    <span class="lot__category"><?=htmlspecialchars($lot['categories']);?></span>
-                    <h3 class="lot__title"><a class="text-link" href="pages/lot.html"><?=htmlspecialchars($lot['name']);?></a></h3>
+                    <span class="lot__category"><?= htmlspecialchars($lot['cat_name']); ?></span>
+                    <h3 class="lot__title"><a class="text-link" href="pages/lot.html"><?= htmlspecialchars($lot['lot_name']); ?></a></h3>
                     <div class="lot__state">
                         <div class="lot__rate">
                             <span class="lot__amount">Стартовая цена</span>
-                            <span class="lot__cost"><?=lotcost($lot['price']) ?></span>
+                            <span class="lot__cost"><?= lot_cost($lot['begin_price']) ?></span>
                         </div>
-                        <?php $interval = get_dt_range($lot['closetime'], date('H:i')); ?>
-                        <div class="lot__timer timer <?php if($interval['hour'] < 1){echo 'timer--finishing';}?> ">
-                        <?=str_pad($interval['hour'], 2, '0', STR_PAD_LEFT)?>:<?=str_pad($interval['minute'], 2, '0', STR_PAD_LEFT)?>
+                        <?php $interval = get_dt_range($lot['date_completion'], date('H:i')); ?>
+                        <div class="lot__timer timer <?php if($interval['hour'] < 1){echo 'timer--finishing';} ?>">
+                        <?= str_pad($interval['hour'], 2, '0', STR_PAD_LEFT) ?>:<?= str_pad($interval['minute'], 2, '0', STR_PAD_LEFT) ?>
                         </div>
                     </div>
                 </div>
