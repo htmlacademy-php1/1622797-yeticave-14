@@ -3,7 +3,7 @@ require_once 'init.php';
 require_once 'functions.php';
 require_once 'data.php';
 
-$sqlCat = get_cat($link);
+$sqlCat = get_categories($link);
 $sqlLots = get_lots($link);
 
 $content = include_template('main.php', ['categories' => $sqlCat, 'lots' => $sqlLots,]);
