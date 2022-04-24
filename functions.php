@@ -1,4 +1,6 @@
 <?php
+require_once 'vendor/autoload.php';
+
 /**
  * Проверяет переданную дату на соответствие формату 'ГГГГ-ММ-ДД'
  *
@@ -143,8 +145,12 @@ function include_template($name, array $data = []) {
     return $result;
 }
 
-/* Функция на раздение тысячных долей от суммы */
-
+/**
+ * Функция для раздение тысячных долей от полной суммы
+ * 
+ * @param int $price Переменная стоимости лота
+ * @return string Если сумма больше 1000 рублей, то отделит тысячные доли от числа
+ */
 function lot_cost(int $price): string {
     if ($price < 1000) {
         return ceil($price) . '₽';
@@ -153,8 +159,13 @@ function lot_cost(int $price): string {
     }
 }
 
-/* Функция для посчета времени до закрытия лота */
-
+/**
+ * Функция для посчета времени до закрытия лота
+ * 
+ * @param string $closetime Время закрытия лота
+ * @param string $curtime Настоящее время
+ * @return array Возвращает время в формате ЧЧ:ММ до закрытия лота
+ */
 function get_dt_range(string $closetime, string $curtime): array {
     $dt_diff = strtotime($closetime) - strtotime($curtime);
     if($dt_diff < 0) {
@@ -167,9 +178,13 @@ function get_dt_range(string $closetime, string $curtime): array {
     return $interval;
 }
 
-/* Функция для работы с категориями из MySQL */
-
-function get_cat(mysqli $link): array {
+/**
+ * Функция для работы с категориями из MySQL
+ *
+ * @param mysqli $link Отправляет запрос в БД для получения списка категорий
+ * @return array Возвращает массив списка категорий
+ */
+function get_categories(mysqli $link): array {
     $sqlCat = 'SELECT * FROM categories';
     $result = mysqli_query($link, $sqlCat);
     if ($result) {
@@ -180,8 +195,12 @@ function get_cat(mysqli $link): array {
     }
 }
 
-/* Функция для работы с лотами */
-
+/**
+ * Функция для работы с лотами
+ *
+ * @param mysqli $link Отправляет запрос в БД для получения списка последних открытых лотов
+ * @return array Возвращает массив с 6 последними открытыми лотами
+ */
 function get_lots(mysqli $link): array {
     $sqlLots = 'SELECT l.creation_time, l.name as lot_name, l.begin_price, l.img, l.date_completion, l.category_id, c.name as cat_name
     FROM lots l
