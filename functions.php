@@ -1,5 +1,4 @@
 <?php
-require_once 'vendor/autoload.php';
 
 /**
  * Проверяет переданную дату на соответствие формату 'ГГГГ-ММ-ДД'
@@ -210,6 +209,20 @@ function get_lots(mysqli $link): array {
     $result = mysqli_query($link, $sqlLots);
     if ($result) {
         return mysqli_fetch_all($result, MYSQLI_ASSOC);
+    } else {
+        $error = mysqli_error($link);
+        print('Ошибка MySQL: ' . $error);
+    }
+}
+
+function get_lot_id(mysqli $link, int $lot_id): array {
+    $sql = 'SELECT lots.name, creation_time, description, img, begin_price, date_completion, bid_step, categories.name as category, categories.id 
+    FROM lots
+    JOIN categories on lots.category_id=categories.id
+    WHERE categories.id=' . $lot_id;
+    $result = mysqli_query($link, $sql);
+    if ($result) {
+        return mysqli_fetch_assoc($result);
     } else {
         $error = mysqli_error($link);
         print('Ошибка MySQL: ' . $error);
