@@ -1,5 +1,4 @@
 <?php
-require_once 'vendor/autoload.php';
 
 /**
  * Проверяет переданную дату на соответствие формату 'ГГГГ-ММ-ДД'
@@ -15,7 +14,8 @@ require_once 'vendor/autoload.php';
  *
  * @return bool true при совпадении с форматом 'ГГГГ-ММ-ДД', иначе false
  */
-function is_date_valid(string $date) : bool {
+function is_date_valid(string $date): bool
+{
     $format_to_check = 'Y-m-d';
     $dateTimeObj = date_create_from_format($format_to_check, $date);
 
@@ -31,7 +31,8 @@ function is_date_valid(string $date) : bool {
  *
  * @return mysqli_stmt Подготовленное выражение
  */
-function db_get_prepare_stmt($link, $sql, $data = []) {
+function db_get_prepare_stmt($link, $sql, $data = [])
+{
     $stmt = mysqli_prepare($link, $sql);
 
     if ($stmt === false) {
@@ -48,11 +49,9 @@ function db_get_prepare_stmt($link, $sql, $data = []) {
 
             if (is_int($value)) {
                 $type = 'i';
-            }
-            else if (is_string($value)) {
+            } else if (is_string($value)) {
                 $type = 's';
-            }
-            else if (is_double($value)) {
+            } else if (is_double($value)) {
                 $type = 'd';
             }
 
@@ -98,7 +97,7 @@ function db_get_prepare_stmt($link, $sql, $data = []) {
  *
  * @return string Рассчитанная форма множественнго числа
  */
-function get_noun_plural_form (int $number, string $one, string $two, string $many): string
+function get_noun_plural_form(int $number, string $one, string $two, string $many): string
 {
     $number = (int) $number;
     $mod10 = $number % 10;
@@ -128,7 +127,8 @@ function get_noun_plural_form (int $number, string $one, string $two, string $ma
  * @param array $data Ассоциативный массив с данными для шаблона
  * @return string Итоговый HTML
  */
-function include_template($name, array $data = []) {
+function include_template($name, array $data = [])
+{
     $name = 'templates/' . $name;
     $result = '';
 
@@ -151,7 +151,8 @@ function include_template($name, array $data = []) {
  * @param int $price Переменная стоимости лота
  * @return string Если сумма больше 1000 рублей, то отделит тысячные доли от числа
  */
-function lot_cost(int $price): string {
+function lot_cost(int $price): string
+{
     if ($price < 1000) {
         return ceil($price) . '₽';
     } else {
@@ -166,9 +167,10 @@ function lot_cost(int $price): string {
  * @param string $curtime Настоящее время
  * @return array Возвращает время в формате ЧЧ:ММ до закрытия лота
  */
-function get_dt_range(string $closetime, string $curtime): array {
+function get_dt_range(string $closetime, string $curtime): array
+{
     $dt_diff = strtotime($closetime) - strtotime($curtime);
-    if($dt_diff < 0) {
+    if ($dt_diff < 0) {
         $interval = ['hour' => 0, 'minute' => 0];
         return $interval;
     }
@@ -184,7 +186,8 @@ function get_dt_range(string $closetime, string $curtime): array {
  * @param mysqli $link Отправляет запрос в БД для получения списка категорий
  * @return array Возвращает массив списка категорий
  */
-function get_categories(mysqli $link): array {
+function get_categories(mysqli $link): array
+{
     $sqlCat = 'SELECT * FROM categories';
     $result = mysqli_query($link, $sqlCat);
     if ($result) {
@@ -201,7 +204,8 @@ function get_categories(mysqli $link): array {
  * @param mysqli $link Отправляет запрос в БД для получения списка последних открытых лотов
  * @return array Возвращает массив с 6 последними открытыми лотами
  */
-function get_lots(mysqli $link): array {
+function get_lots(mysqli $link): array
+{
     $sqlLots = 'SELECT l.creation_time, l.name as lot_name, l.begin_price, l.img, l.date_completion, l.category_id, c.name as cat_name
     FROM lots l
     JOIN categories c ON c.id = l.category_id
@@ -210,6 +214,29 @@ function get_lots(mysqli $link): array {
     $result = mysqli_query($link, $sqlLots);
     if ($result) {
         return mysqli_fetch_all($result, MYSQLI_ASSOC);
+    } else {
+        $error = mysqli_error($link);
+        print('Ошибка MySQL: ' . $error);
+    }
+}
+
+/**
+ * Функция по выбору конкретного лота из строки запроса
+ *
+ * @param mysqli link Отправлять запрос в БД на получение лота
+ * @param int $lot_id Переменная со строкой запроса
+ *
+ * @return array Возвращает лот с конкретным id
+ */
+function get_lot_id(mysqli $link, int $lot_id): array
+{
+    $sql = 'SELECT lots.name, creation_time, description, img, begin_price, date_completion, bid_step, categories.name as category, categories.id 
+    FROM lots
+    JOIN categories on lots.category_id=categories.id
+    WHERE categories.id=' . $lot_id;
+    $result = mysqli_query($link, $sql);
+    if ($result) {
+        return mysqli_fetch_assoc($result);
     } else {
         $error = mysqli_error($link);
         print('Ошибка MySQL: ' . $error);

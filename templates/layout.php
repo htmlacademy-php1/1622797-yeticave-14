@@ -2,7 +2,7 @@
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <title><?=htmlspecialchars($title);?></title>
+    <title><?= htmlspecialchars($title); ?></title>
     <link href="../css/normalize.min.css" rel="stylesheet">
     <link href="../css/style.css" rel="stylesheet">
 </head>
@@ -25,7 +25,7 @@
 
          <?php if ($is_auth === 1): ?>
             <div class="user-menu__logged">
-             <p><?=htmlspecialchars($user_name);?></p>
+             <p><?= htmlspecialchars($user_name); ?></p>
              <a class="user-menu__bets" href="pages/my-bets.html">Мои ставки</a>
              <a class="user-menu__logout" href="#">Выход</a>
             </div>
