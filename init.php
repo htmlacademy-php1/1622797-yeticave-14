@@ -1,6 +1,7 @@
 <?php
 
-require_once __DIR__ . '/functions/validate.php';
+require_once __DIR__ . '/functions/validate_form.php';
+require_once __DIR__ . '/functions/validate_signup.php';
 require_once __DIR__ . '/functions/file.php';
 require_once __DIR__ . '/functions/template.php';
 require_once __DIR__ . '/functions/calculate.php';
