@@ -1,11 +1,10 @@
 <?php
 
-$config = require_once __DIR__ .'/config.php';
-
-$link = mysqli_connect($config['db']['host'], $config['db']['user'], $config['db']['password'], $config['db']['database']);
-mysqli_set_charset($link, "utf8");
-
-if(!$link) {
-    $error = mysqli_connect_error();
-    print("Ошибка MySQL: " . $error);
-}
+require_once __DIR__ . '/functions/validate.php';
+require_once __DIR__ . '/functions/file.php';
+require_once __DIR__ . '/functions/template.php';
+require_once __DIR__ . '/functions/calculate.php';
+require_once __DIR__ . '/functions/db.php';
+require_once __DIR__ . '/data.php';
+$config = require_once __DIR__ . '/config.php';
+$link = connect_db($config['db']);

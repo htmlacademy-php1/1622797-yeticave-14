@@ -11,7 +11,7 @@ CREATE TABLE lots (
    id int AUTO_INCREMENT PRIMARY KEY,
    creation_time datetime NOT NULL,
    name varchar(122) NOT NULL,
-   description varchar(255),
+   description varchar (500),
    img varchar(255),
    begin_price int NOT NULL,
    date_completion date,
