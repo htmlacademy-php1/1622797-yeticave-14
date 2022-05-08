@@ -166,3 +166,52 @@ function add_lot(mysqli $link, array $lot_form_data, $files): bool
         exit();
     }
 }
+
+
+/**
+ * Функция проверяет email на повторение с уже сущестующим в БД
+ *
+ * @param mysqli link Соединение с БД
+ * @param string email Передает введеный e-mail
+ *
+ * @return array Возвращает значение e-mail из существующих в таблицу users
+ */
+function get_user_email(mysqli $link, string $email): ?array
+{
+    $sql = 'SELECT id, email, password FROM users WHERE email= ?';
+
+    $stmt = mysqli_prepare($link, $sql);
+    mysqli_stmt_bind_param($stmt, 's', $email);
+    mysqli_stmt_execute($stmt);
+
+    $result = mysqli_stmt_get_result($stmt);
+    $email_from_db = mysqli_fetch_all($result, MYSQLI_ASSOC);
+
+    return $email_from_db;
+}
+
+
+/**
+ * Функция добавляет нового зарегистрированого юзера в БД
+ *
+ * @param mysqli link Соединение с БД
+ * @param array signup_form Массив с данными из формы
+ *
+ * @return bool Возвращает удачное добавление юзера в БД или ошибку
+ */
+function add_user(mysqli $link, array $signup_form): bool
+{
+    $signup_form['password'] = password_hash($signup_form['password'], PASSWORD_DEFAULT);
+
+    $sql = 'INSERT INTO users(creation_time, email, password, name, contact) VALUES (NOW(), ?, ?, ?, ?)';
+
+    $stmt = db_get_prepare_stmt($link, $sql, $signup_form);
+    $result = mysqli_stmt_execute($stmt);
+
+    if ($result) {
+        return true;
+    } else {
+        print("Ошибка MySQL: " . mysqli_error($link));
+        exit();
+    }
+}
