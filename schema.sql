@@ -33,7 +33,7 @@ CREATE TABLE users (
   id int AUTO_INCREMENT PRIMARY KEY,
   creation_time datetime NOT NULL,
   email varchar(64) NOT NULL UNIQUE,
-  user_name varchar(64) NOT NULL,
+  name varchar(64) NOT NULL,
   password varchar(64) NOT NULL,
   contact varchar(122) NOT NULL
 );
