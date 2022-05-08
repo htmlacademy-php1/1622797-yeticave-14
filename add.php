@@ -1,7 +1,7 @@
 <?php
 require_once __DIR__ . '/init.php';
 
-$sqlCat = get_categories($link);
+$sql_cat = get_categories($link);
 $errors = [];
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
@@ -16,7 +16,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         'date_completion' => FILTER_DEFAULT
     ], true);
 
-    $categories_id = array_column($sqlCat, 'id');
+    $categories_id = array_column($sql_cat, 'id');
     $errors = validate_form_lot($lot_form_data, $categories_id, $_FILES);
 
     $errors = array_filter($errors);
@@ -24,15 +24,15 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     if (!$errors) {
         if (add_lot($link, $lot_form_data, $_FILES)) {
             $lot_id = mysqli_insert_id($link);
-            header("Location: lot.php?id=" . $lot_id);
+            header("Location: /lot.php?id=" . $lot_id);
         }
     }
 }
 
-$content = include_template('add.php', ['categories' => $sqlCat, 'errors' => $errors]);
+$content = include_template('add.php', ['categories' => $sql_cat, 'errors' => $errors]);
 
 $layout_content = include_template('layout.php', [
-    'categories' => $sqlCat,
+    'categories' => $sql_cat,
     'content' => $content,
     'is_auth' => $is_auth,
     'user_name' => $user_name,

@@ -1,7 +1,7 @@
 <?php
 require_once __DIR__ . '/init.php';
 
-$sqlCat = get_categories($link);
+$sql_cat = get_categories($link);
 
 $lot_id = $_GET['id'];
 
@@ -10,10 +10,10 @@ if ($lot === null) {
     header("Location: /404.php");
 }
 
-$content = include_template('lot.php', ['categories' => $sqlCat, 'lot' => $lot]);
+$content = include_template('lot.php', ['categories' => $sql_cat, 'lot' => $lot]);
 
 $layout_content = include_template('layout.php', [
-    'categories' => $sqlCat,
+    'categories' => $sql_cat,
     'content' => $content,
     'is_auth' => $is_auth,
     'user_name' => $user_name,
