@@ -19,31 +19,33 @@
         <p class="lot-item__description"><?= htmlspecialchars($lot['description']) ?></p>
       </div>
       <div class="lot-item__right">
-        <div class="lot-item__state">
-          <?php $interval = get_dt_range($lot['date_completion'], date('H:i')); ?>
-          <div class="lot__timer timer <?php if ($interval['hour'] < 1) {
-                                          echo 'timer--finishing';
-                                        } ?>">
-            <?= str_pad($interval['hour'], 2, '0', STR_PAD_LEFT) ?>:<?= str_pad($interval['minute'], 2, '0', STR_PAD_LEFT) ?>
-          </div>
-          <div class="lot-item__cost-state">
-            <div class="lot-item__rate">
-              <span class="lot-item__amount">Текущая цена</span>
-              <span class="lot-item__cost"><?= lot_cost($lot['begin_price']) ?></span>
+        <?php if (!empty($user_id)) : ?>
+          <div class="lot-item__state">
+            <?php $interval = get_dt_range($lot['date_completion'], date('H:i')); ?>
+            <div class="lot__timer timer <?php if ($interval['hour'] < 1) {
+                                            echo 'timer--finishing';
+                                          } ?>">
+              <?= str_pad($interval['hour'], 2, '0', STR_PAD_LEFT) ?>:<?= str_pad($interval['minute'], 2, '0', STR_PAD_LEFT) ?>
             </div>
-            <div class="lot-item__min-cost">
-              Мин. ставка <span><?= htmlspecialchars($lot['bid_step']) ?></span>
+            <div class="lot-item__cost-state">
+              <div class="lot-item__rate">
+                <span class="lot-item__amount">Текущая цена</span>
+                <span class="lot-item__cost"><?= lot_cost($lot['begin_price']) ?></span>
+              </div>
+              <div class="lot-item__min-cost">
+                Мин. ставка <span><?= htmlspecialchars($lot['bid_step']) ?></span>
+              </div>
             </div>
+            <form class="lot-item__form" action="https://echo.htmlacademy.ru" method="post" autocomplete="off">
+              <p class="lot-item__form-item form__item form__item--invalid">
+                <label for="cost">Ваша ставка</label>
+                <input id="cost" type="text" name="cost" placeholder="12 000">
+                <span class="form__error">Введите наименование лота</span>
+              </p>
+              <button type="submit" class="button">Сделать ставку</button>
+            </form>
           </div>
-          <form class="lot-item__form" action="https://echo.htmlacademy.ru" method="post" autocomplete="off">
-            <p class="lot-item__form-item form__item form__item--invalid">
-              <label for="cost">Ваша ставка</label>
-              <input id="cost" type="text" name="cost" placeholder="12 000">
-              <span class="form__error">Введите наименование лота</span>
-            </p>
-            <button type="submit" class="button">Сделать ставку</button>
-          </form>
-        </div>
+        <?php endif; ?>
         <div class="history">
           <h3>История ставок (<span>10</span>)</h3>
           <table class="history__list">
