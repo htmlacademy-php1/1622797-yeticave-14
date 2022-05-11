@@ -12,11 +12,11 @@ VALUES
 ('Разное', 'other');
 
 /* Добавляем пользователей */
-INSERT INTO users(creation_time, username, password, contact)
+INSERT INTO users(creation_time, name, email, password, contact)
 VALUES
-('2022-04-07', 'Vasya', '123456','89001001010'),
-('2022-04-03', 'Петрович', 'qwerty','89012002020'),
-('2022-03-28', 'Thomasmanz', 'asdfgh','89023003030');
+('2022-04-07', 'Vasya', 'vasya@yandex.ru', '123456','89001001010'),
+('2022-04-03', 'Петрович', 'petrovich@gmail.com', 'qwerty','89012002020'),
+('2022-03-28', 'Thomasmanz', 'thomasmanz@mail.ru', 'asdfgh','89023003030');
 
 /* Добавляем лоты */
 INSERT INTO lots(name, creation_time, description, img, begin_price, date_completion, bid_step, user_id, winner_id, category_id)
