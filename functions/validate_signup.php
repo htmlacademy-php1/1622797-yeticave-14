@@ -37,7 +37,7 @@ function validate_email(mysqli $link, string $email): ?string
     if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
         return "Некорректно введен e-mail";
     }
-    if (get_user_email($link, $email)) {
+    if (get_user_by_email($link, $email)) {
         return "E-mail используется другим пользователем";
     }
 
