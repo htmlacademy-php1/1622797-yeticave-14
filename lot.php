@@ -1,23 +1,22 @@
 <?php
 require_once __DIR__ . '/init.php';
 
-$sql_cat = get_categories($link);
+$user_id = get_user_id_session();
+$categories = get_categories($link);
 
 $lot_id = $_GET['id'];
 
-$lot = get_lot_id($link, $lot_id);
-if ($lot === null) {
+$lot_data = get_lot_id($link, $lot_id);
+if ($lot_data === null) {
     header("Location: /404.php");
 }
 
-$content = include_template('lot.php', ['categories' => $sql_cat, 'lot' => $lot]);
+$content = include_template('lot.php', ['categories' => $categories, 'lot' => $lot_data, 'user_id' => $user_id]);
 
 $layout_content = include_template('layout.php', [
-    'categories' => $sql_cat,
+    'categories' => $categories,
     'content' => $content,
-    'is_auth' => $is_auth,
-    'user_name' => $user_name,
-    'title' => $title
+    'title' => $lot_data['name']
 ]);
 
 print($layout_content);

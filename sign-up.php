@@ -1,7 +1,7 @@
 <?php
 require_once __DIR__ . '/init.php';
 
-$sql_cat = get_categories($link);
+$categories = get_categories($link);
 $errors = [];
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
@@ -20,14 +20,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     }
 }
 
-$content = include_template('sign-up.php', ['categories' => $sql_cat, 'errors' => $errors]);
+$content = include_template('sign-up.php', ['categories' => $categories, 'errors' => $errors]);
 
 $layout_content = include_template('layout.php', [
-    'categories' => $sql_cat,
+    'categories' => $categories,
     'content' => $content,
-    'is_auth' => $is_auth,
-    'user_name' => $user_name,
-    'title' => $title
+    'title' => 'Страница регистрации'
 ]);
 
 print($layout_content);
