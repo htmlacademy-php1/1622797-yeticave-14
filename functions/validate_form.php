@@ -127,6 +127,7 @@ function validate_date(string $date): ?string
         return "Значение должно быть датой в формате ГГГГ-ММ-ДД";
     }
     $timer = get_dt_range($date, 'now');
+
     if ($timer < 24) {
         return "Указанная дата должна быть больше текущей даты, хотя бы на один день";
     }

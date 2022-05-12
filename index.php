@@ -1,15 +1,16 @@
 <?php
 require_once __DIR__ . '/init.php';
 
-$sql_cat = get_categories($link);
-$sql_lots = get_lots($link);
+$user_name = check_session_name();
+$categories = get_categories($link);
+$lots = get_lots($link);
+$title = 'YetiCave - интернет-аукцион сноубордического снаряжения';
 
-$content = include_template('main.php', ['categories' => $sql_cat, 'lots' => $sql_lots,]);
+$content = include_template('main.php', ['categories' => $categories, 'lots' => $lots,]);
 
 $layout_content = include_template('layout.php', [
-    'categories' => $sql_cat,
+    'categories' => $categories,
     'content' => $content,
-    'is_auth' => $is_auth,
     'user_name' => $user_name,
     'title' => $title
 ]);

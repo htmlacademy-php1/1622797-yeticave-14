@@ -31,12 +31,12 @@ function get_categories(mysqli $link): array
 {
     $sqlCat = 'SELECT * FROM categories';
     $result = mysqli_query($link, $sqlCat);
-    if ($result) {
-        return mysqli_fetch_all($result, MYSQLI_ASSOC);
-    } else {
-        $error = mysqli_error($link);
-        print('Ошибка MySQL: ' . $error);
+    if (!$result) {
+        print("Ошибка MySQL: " . mysqli_error($link));
+        exit();
     }
+
+    return mysqli_fetch_all($result, MYSQLI_ASSOC);
 }
 
 
@@ -54,12 +54,12 @@ function get_lots(mysqli $link): array
     WHERE l.date_completion > NOW() GROUP BY (l.id)
     ORDER BY l.creation_time DESC LIMIT 6';
     $result = mysqli_query($link, $sqlLots);
-    if ($result) {
-        return mysqli_fetch_all($result, MYSQLI_ASSOC);
-    } else {
-        $error = mysqli_error($link);
-        print('Ошибка MySQL: ' . $error);
+    if (!$result) {
+        print("Ошибка MySQL: " . mysqli_error($link));
+        exit();
     }
+
+    return mysqli_fetch_all($result, MYSQLI_ASSOC);
 }
 
 
@@ -79,9 +79,12 @@ function get_lot_id(mysqli $link, int $lot_id): ?array
     WHERE lots.id=' . $lot_id;
 
     $result = mysqli_query($link, $sql);
-    if ($result) {
-        return mysqli_fetch_assoc($result);
+    if (!$result) {
+        print("Ошибка MySQL: " . mysqli_error($link));
+        exit();
     }
+
+    return mysqli_fetch_assoc($result);
 }
 
 
@@ -154,17 +157,17 @@ function add_lot(mysqli $link, array $lot_form_data, $files): bool
     $lot_form_data['date_completion'] = date("Y-m-d H:i:s", strtotime($lot_form_data['date_completion']));
 
     $sql = 'INSERT INTO lots(name, creation_time, category_id, description, img, begin_price, bid_step, date_completion, user_id)
-    VALUES (?, NOW(), ?, ?, ?, ?, ?, ?, 1)';
+    VALUES (?, NOW(), ?, ?, ?, ?, ?, ?, ?)';
 
     $stmt = db_get_prepare_stmt($link, $sql, $lot_form_data);
     $result = mysqli_stmt_execute($stmt);
 
-    if ($result) {
-        return true;
-    } else {
+    if (!$result) {
         print("Ошибка MySQL: " . mysqli_error($link));
         exit();
     }
+
+    return true;
 }
 
 
@@ -176,18 +179,18 @@ function add_lot(mysqli $link, array $lot_form_data, $files): bool
  *
  * @return array Возвращает значение e-mail из существующих в таблицу users
  */
-function get_user_email(mysqli $link, string $email): ?array
+function get_user_by_email(mysqli $link, string $email): ?array
 {
-    $sql = 'SELECT id, email, password FROM users WHERE email= ?';
+    $sql = 'SELECT id, name, email, password FROM users WHERE email= ?';
 
     $stmt = mysqli_prepare($link, $sql);
     mysqli_stmt_bind_param($stmt, 's', $email);
     mysqli_stmt_execute($stmt);
 
     $result = mysqli_stmt_get_result($stmt);
-    $email_from_db = mysqli_fetch_all($result, MYSQLI_ASSOC);
+    $array_from_db = mysqli_fetch_all($result, MYSQLI_ASSOC);
 
-    return $email_from_db;
+    return $array_from_db[0] ?? null;
 }
 
 
@@ -208,10 +211,10 @@ function add_user(mysqli $link, array $signup_form): bool
     $stmt = db_get_prepare_stmt($link, $sql, $signup_form);
     $result = mysqli_stmt_execute($stmt);
 
-    if ($result) {
-        return true;
-    } else {
+    if (!$result) {
         print("Ошибка MySQL: " . mysqli_error($link));
         exit();
     }
+
+    return true;
 }

@@ -1,8 +1,13 @@
 <?php
 require_once __DIR__ . '/init.php';
 
-$sql_cat = get_categories($link);
+$categories = get_categories($link);
 $errors = [];
+
+$user_id = get_user_id_session();
+if ($user_id === null) {
+    header("Location: /403.php");
+}
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
@@ -16,7 +21,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         'date_completion' => FILTER_DEFAULT
     ], true);
 
-    $categories_id = array_column($sql_cat, 'id');
+    $categories_id = array_column($categories, 'id');
     $errors = validate_form_lot($lot_form_data, $categories_id, $_FILES);
 
     $errors = array_filter($errors);
@@ -29,14 +34,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     }
 }
 
-$content = include_template('add.php', ['categories' => $sql_cat, 'errors' => $errors]);
+$content = include_template('add.php', ['categories' => $categories, 'errors' => $errors]);
 
 $layout_content = include_template('layout.php', [
-    'categories' => $sql_cat,
+    'categories' => $categories,
     'content' => $content,
-    'is_auth' => $is_auth,
-    'user_name' => $user_name,
-    'title' => $title
+    'title' => 'Добавление лота'
 ]);
 
 print($layout_content);
