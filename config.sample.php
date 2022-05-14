@@ -6,5 +6,7 @@ return [
         'user' => '',
         'password' => '',
         'database' => ''
-        ]
+    ],
+
+    'pagination_limit' => 9
 ];

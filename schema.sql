@@ -37,3 +37,5 @@ CREATE TABLE users (
   password varchar(64) NOT NULL,
   contact varchar(122) NOT NULL
 );
+
+CREATE FULLTEXT INDEX lots_ft_search ON lots(name, description);

@@ -218,3 +218,64 @@ function add_user(mysqli $link, array $signup_form): bool
 
     return true;
 }
+
+
+/**
+ * Функция осуществляет поиск по столбцам name, description в таблице лотов с ограничением по количеству элементов
+ *
+ * @param mysqli link Соединение с БД
+ * @param string search Принимает поисковый запрос
+ * @param int cur_page Текущая страница
+ * @param int pagination_limit Лимит на количество выведенных лотов на странице
+ *
+ * @return array Возвращает массив с последними новыми лотами или ошибку
+ */
+function get_lot_by_search(mysqli $link, string $search, int $cur_page, int $pagination_limit): array
+{
+    $offset = $pagination_limit * ($cur_page - 1);
+    $sql = 'SELECT l.id, l.name as lot_name, l.description, l.begin_price, l.img, l.date_completion, c.name as cat_name
+    FROM lots l
+    JOIN categories c ON c.id = l.category_id
+    WHERE MATCH(l.name, l.description) AGAINST(? IN BOOLEAN MODE)
+    ORDER BY l.creation_time DESC LIMIT ' . $pagination_limit . ' OFFSET ' . $offset;
+
+    $stmt = db_get_prepare_stmt($link, $sql, [$search]);
+    mysqli_stmt_execute($stmt);
+    $result = mysqli_stmt_get_result($stmt);
+
+    if (!$result) {
+        print("Ошибка MySQL: " . mysqli_error($link));
+        exit();
+    }
+
+    return mysqli_fetch_all($result, MYSQLI_ASSOC);
+}
+
+
+/**
+ * Функция получает количество лотов найденное поиском
+ *
+ * @param mysqli link Соединение с БД
+ * @param string search Принимает поисковый запрос
+ *
+ * @return int Возвращает количество лотов из БД или ошибку
+ */
+function get_count_lots_from_search(mysqli $link, string $search): int
+{
+    $sql = 'SELECT l.id, l.name as lot_name, l.description, l.begin_price, l.img, l.date_completion, c.name as cat_name
+    FROM lots l
+    JOIN categories c ON c.id = l.category_id
+    WHERE MATCH(l.name, l.description) AGAINST(? IN BOOLEAN MODE)
+    ORDER BY l.creation_time DESC';
+
+    $stmt = db_get_prepare_stmt($link, $sql, [$search]);
+    mysqli_stmt_execute($stmt);
+    $result = mysqli_stmt_get_result($stmt);
+
+    if (!$result) {
+        print("Ошибка MySQL: " . mysqli_error($link));
+        exit();
+    }
+
+    return count(mysqli_fetch_all($result, MYSQLI_ASSOC));
+}

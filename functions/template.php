@@ -86,3 +86,49 @@ function get_noun_plural_form(int $number, string $one, string $two, string $man
             return $many;
     }
 }
+
+
+/**
+ * Функция приводит тип текущей страницы к целому числу
+ *
+ * @param string current_page Переменная с текущей страницей
+ *
+ * @return void Если номер страницы меньше или равен нулю, то переводим на 404 страницу
+ */
+function check_current_page(string $current_page)
+{
+    $current_page = (int)$current_page;
+    if ($current_page <= 0) {
+        header("Location: /404.php");
+        exit();
+    }
+}
+
+
+/**
+ * Функуция получает массив переменных для пагинации
+ *
+ * @param int cur_page Получает текущую страницу
+ * @param mixed count_lots_from_search Получает количество лотов на странице
+ * @param mixed pagination_limit Получает количество лотов на одной странице
+ *
+ * @return array Возвращает массив данных для пагинации на странице
+ */
+function get_pagination_list(int $cur_page, $count_lots_from_search, $pagination_limit): array
+{
+
+    $page_count = ceil($count_lots_from_search / $pagination_limit);
+    $pages = range(1, $page_count);
+
+    $prev = ($cur_page > 1) ? $cur_page - 1 : $cur_page;
+    $next = ($cur_page < $page_count) ? $cur_page + 1 : $cur_page;
+
+    return [
+        'prev_page' => $prev,
+        'next_page' => $next,
+        'page_count' => $page_count,
+        'pages' => $pages,
+        'cur_page' => $cur_page,
+        'lot_limit' => $count_lots_from_search
+    ];
+}
