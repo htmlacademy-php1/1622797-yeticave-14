@@ -261,7 +261,7 @@ function get_lot_by_search(mysqli $link, string $search, int $cur_page, int $pag
  *
  * @return int Возвращает количество лотов из БД или ошибку
  */
-function get_count_lots_from_search(mysqli $link, string $search): int
+function get_count_lots_from_search(mysqli $link, array $search): int
 {
     $sql = 'SELECT COUNT(*) as count FROM lots
     WHERE MATCH(name, description) AGAINST(?)';

@@ -21,7 +21,7 @@ $search = trim(strip_tags($search));
 $search_result = get_lot_by_search($link, $search, $cur_page, $pagination_limit);
 
 
-$count_lots_from_search = get_count_lots_from_search($link, $search);
+$count_lots_from_search = get_count_lots_from_search($link, $search_result);
 
 
 if ($search === '' || empty($search_result)) {
