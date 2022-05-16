@@ -1,4 +1,7 @@
 <?php
+/**
+ * @var mysqli $link
+ */
 require_once __DIR__ . '/init.php';
 
 $categories = get_categories($link);
@@ -17,6 +20,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     if (!$errors) {
         add_user($link, $signup_form);
         header("Location: /login.php");
+        exit();
     }
 }
 

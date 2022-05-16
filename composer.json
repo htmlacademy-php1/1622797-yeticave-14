@@ -13,5 +13,9 @@
             "name": "Kirill Podryadov",
             "email": "iamkir90@hotmail.com"
         }
-    ]
+    ],
+    "require": {
+      "ext-mysqli": "*"
+    }
 }
+

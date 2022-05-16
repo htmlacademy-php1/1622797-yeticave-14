@@ -1,4 +1,8 @@
 <?php
+/**
+ * @var mysqli $config
+ * @var mysqli $link
+ */
 require_once __DIR__ . '/init.php';
 
 $categories = get_categories($link);
@@ -17,7 +21,7 @@ $search = trim(strip_tags($search));
 $search_result = get_lot_by_search($link, $search, $cur_page, $pagination_limit);
 
 
-$count_lots_from_search = get_count_lots_from_search($link, $search_result);
+$count_lots_from_search = get_count_lots_from_search($link, $search);
 
 
 if ($search === '' || empty($search_result)) {
