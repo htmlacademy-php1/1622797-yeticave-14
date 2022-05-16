@@ -1,4 +1,7 @@
 <?php
+/**
+ * @var mysqli $link
+ */
 require_once __DIR__ . '/init.php';
 
 $user_name = check_session_name();

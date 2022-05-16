@@ -14,5 +14,7 @@
             "email": "iamkir90@hotmail.com"
         }
     ],
-    "require": {}
+    "require": {
+      "ext-mysqli": "*"
+    }
 }

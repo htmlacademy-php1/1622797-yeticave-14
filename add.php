@@ -7,6 +7,7 @@ $errors = [];
 $user_id = get_user_id_session();
 if ($user_id === null) {
     header("Location: /403.php");
+    exit();
 }
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
@@ -27,9 +28,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $errors = array_filter($errors);
 
     if (!$errors) {
-        if (add_lot($link, $lot_form_data, $_FILES)) {
+        if (add_lot($link, $lot_form_data, $user_id)) {
             $lot_id = mysqli_insert_id($link);
             header("Location: /lot.php?id=" . $lot_id);
+            exit();
         }
     }
 }
