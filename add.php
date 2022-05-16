@@ -27,7 +27,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $errors = array_filter($errors);
 
     if (!$errors) {
-        if (add_lot($link, $lot_form_data, $_FILES)) {
+        if (add_lot($link, $lot_form_data, $user_id)) {
             $lot_id = mysqli_insert_id($link);
             header("Location: /lot.php?id=" . $lot_id);
         }

@@ -95,13 +95,15 @@ function get_noun_plural_form(int $number, string $one, string $two, string $man
  *
  * @return void Если номер страницы меньше или равен нулю, то переводим на 404 страницу
  */
-function check_current_page(string $current_page)
+function check_current_page(string $cur_page)
 {
-    $current_page = (int)$current_page;
-    if ($current_page <= 0) {
+    $cur_page = (int)$cur_page;
+    if ($cur_page <= 0) {
         header("Location: /404.php");
         exit();
     }
+
+    return $cur_page;
 }
 
 
