@@ -8,7 +8,6 @@ $categories = get_categories($link);
 $errors = [];
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-
     $login_form = filter_input_array(INPUT_POST, [
         'email' => FILTER_DEFAULT,
         'password' => FILTER_DEFAULT

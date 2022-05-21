@@ -8,5 +8,5 @@ return [
         'database' => ''
     ],
 
-    'pagination_limit' => 9
+    'pagination_limit' => 9,
 ];

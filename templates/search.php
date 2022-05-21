@@ -3,7 +3,7 @@
         <ul class="nav__list container">
             <?php foreach ($categories as $category) : ?>
                 <li class="nav__item">
-                    <a href="all-lots.html"><?= $category['name']; ?></a>
+                    <a href="all-lots.php?category=<?= $category['id']; ?>"><?= $category['name']; ?></a>
                 </li>
             <?php endforeach; ?>
         </ul>
@@ -26,9 +26,7 @@
                                     <span class="lot__cost"><?= lot_cost($lot['begin_price']) ?></span>
                                 </div>
                                 <?php $interval = get_dt_range($lot['date_completion'], date('H:i')); ?>
-                                <div class="lot__timer timer <?php if ($interval['hour'] < 1) {
-                                                                    echo 'timer--finishing';
-                                                                } ?>">
+                                <div class="lot__timer timer <?php if ($interval['hour'] < 1) { echo 'timer--finishing'; } ?>">
                                     <?= str_pad($interval['hour'], 2, '0', STR_PAD_LEFT) ?>:<?= str_pad($interval['minute'], 2, '0', STR_PAD_LEFT) ?>
                                 </div>
                             </div>
@@ -37,7 +35,7 @@
                 <?php endforeach; ?>
             </ul>
         </section>
-        <?php if (isset($pagination_limit['page_count']) && $pagination_limit['page_count'] > 1) : ?>)
+        <?php if (isset($pagination_limit['page_count']) && $pagination_limit['page_count'] > 1) : ?>
         <ul class="pagination-list">
             <li class="pagination-item pagination-item-prev"><a href="<?= 'search.php?search=' . htmlspecialchars($search) . '&page=' . $pagination['prev'] ?>">Назад</a></li>
             <?php foreach ($pagination['pages'] as $pages) : ?>
@@ -49,6 +47,6 @@
             <?php endforeach; ?>
             <li class="pagination-item pagination-item-next"><a href="<?= 'search.php?search=' . htmlspecialchars($search) . '&page=' . $pages ?>">Вперед</a></li>
         </ul>
-    <?php endif; ?>
+        <?php endif; ?>
     </div>
 </main>

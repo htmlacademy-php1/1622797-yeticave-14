@@ -27,7 +27,6 @@ function include_template($name, array $data = [])
 
 /**
  * Функция для раздение тысячных долей от полной суммы
- * 
  * @param int $price Переменная стоимости лота
  * @return string Если сумма больше 1000 рублей, то отделит тысячные доли от числа
  */
@@ -90,12 +89,10 @@ function get_noun_plural_form(int $number, string $one, string $two, string $man
 
 /**
  * Функция приводит тип текущей страницы к целому числу
- *
  * @param string current_page Переменная с текущей страницей
- *
- * @return void Если номер страницы меньше или равен нулю, то переводим на 404 страницу
+ * @return int Если номер страницы меньше или равен нулю, то переводим на 404 страницу
  */
-function check_current_page(string $cur_page)
+function check_current_page(string $cur_page): int
 {
     $cur_page = (int)$cur_page;
     if ($cur_page <= 0) {
@@ -109,16 +106,13 @@ function check_current_page(string $cur_page)
 
 /**
  * Функуция получает массив переменных для пагинации
- *
  * @param int cur_page Получает текущую страницу
  * @param mixed count_lots_from_search Получает количество лотов на странице
  * @param mixed pagination_limit Получает количество лотов на одной странице
- *
  * @return array Возвращает массив данных для пагинации на странице
  */
 function get_pagination_list(int $cur_page, $count_lots_from_search, $pagination_limit): array
 {
-
     $page_count = ceil($count_lots_from_search / $pagination_limit);
     $pages = range(1, $page_count);
 
@@ -133,4 +127,39 @@ function get_pagination_list(int $cur_page, $count_lots_from_search, $pagination
         'cur_page' => $cur_page,
         'lot_limit' => $count_lots_from_search
     ];
+}
+
+
+/**
+ * @param string $date
+ * @param string $cur_date
+ * @return string|null
+ */
+function get_time_bet(string $date, string $cur_date): ?string
+{
+    $date = date_create($date);
+    $cur_date = date_create($cur_date);
+
+    $diff = date_diff($cur_date, $date);
+
+    $days = $diff->days;
+    $hours = $diff->h;
+    $minutes = $diff->i;
+
+    if ($days === 0 && $hours !== 0) {
+        return $hours . ' ' . get_noun_plural_form($hours, 'час назад', 'часа назад', 'часов назад');
+    }
+    if ($hours === 0) {
+        return $minutes . ' ' . get_noun_plural_form($minutes, 'минуту назад', 'минуты назад', 'минут назад');
+    }
+
+    if ($days === 1) {
+        return date_format($date, 'Вчера в H:i');
+    }
+
+    if ($days > 1) {
+        return date_format($date, 'd-m-y в H:i');
+    }
+
+    return null;
 }
