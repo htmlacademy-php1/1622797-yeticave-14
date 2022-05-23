@@ -2,9 +2,7 @@
 
 /**
  * Функция получает значения из POST-запроса
- *
  * @param mixed значения POST-запросов
- *
  * @return void возвращает значения из POST-запроса
  */
 function get_post_val($name)
@@ -15,11 +13,9 @@ function get_post_val($name)
 
 /**
  * Функция проверяет все данные введенные в форму
- *
  * @param array lot_form_data Массив с данными из формы
  * @param array category_ids Проверяет соответствует ли категория к уже существующим
  * @param array files Передает картинку из формы
- *
  * @return array Возвращает массив с данными и файлом из формы
  */
 function validate_form_lot(array $lot_form_data, array $category_ids, array $files): array
@@ -40,10 +36,8 @@ function validate_form_lot(array $lot_form_data, array $category_ids, array $fil
 
 /**
  * Функция проверяет поле с Названием лота
- *
  * @param string value Проверяет значение на соответствие формату и количеству символов
- *
- * @return string Возвращает ошибки, если данные заполнены не верно
+ * @return string|null Возвращает ошибки, если данные заполнены не верно
  */
 function validate_name(string $value): ?string
 {
@@ -60,10 +54,8 @@ function validate_name(string $value): ?string
 
 /**
  * Функция проверяет поле с Описанием лота
- *
  * @param string value Проверяет значение на соответствие формату и количеству символов
- *
- * @return string Возвращает ошибки, если данные заполнены не верно
+ * @return string|null Возвращает ошибки, если данные заполнены не верно
  */
 function validate_description(string $value): ?string
 {
@@ -80,11 +72,9 @@ function validate_description(string $value): ?string
 
 /**
  * Функция проверяет поле с Категориями лота
- *
  * @param string id Проверяет id категории
  * @param array category_ids Проверка id с массивом существующих категорий
- *
- * @return string Возвращает ошибку, если была введена несуществующая категория
+ * @return string|null Возвращает ошибку, если была введена несуществующая категория
  */
 function validate_category(string $id, array $category_ids): ?string
 {
@@ -98,10 +88,8 @@ function validate_category(string $id, array $category_ids): ?string
 
 /**
  * Функция проверяет значения введенные в поля Начальная цена и Шаг ставки
- *
  * @param string price Передает значение поля с введенной суммой
- *
- * @return string Возвращает ошибку, если цифра была меньше нуля или введены буквы, вместо цифр
+ * @return string|null Возвращает ошибку, если цифра была меньше нуля или введены буквы, вместо цифр
  */
 function validate_price(string $price): ?string
 {
@@ -116,10 +104,8 @@ function validate_price(string $price): ?string
 
 /**
  * Функция проверяет поле с датой окончания действия лота
- *
  * @param string date Получает введенную дату
- *
- * @return string Возвращает ошибку, если формат даты был введен неверно
+ * @return string|null Возвращает ошибку, если формат даты был введен неверно
  */
 function validate_date(string $date): ?string
 {
@@ -138,10 +124,8 @@ function validate_date(string $date): ?string
 
 /**
  * Функция проверяет файл на соответствие формату jpeg или png
- *
  * @param array files Получает файл
- *
- * @return string Возвращает ошибку, если был загружен неверный формат изображения
+ * @return string|null Возвращает ошибку, если был загружен неверный формат изображения
  */
 function validate_img(array $files): ?string
 {
