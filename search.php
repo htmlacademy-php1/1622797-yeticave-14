@@ -1,8 +1,10 @@
 <?php
+
 /**
  * @var mysqli $config
  * @var mysqli $link
  */
+
 require_once __DIR__ . '/init.php';
 
 $categories = get_categories($link);
@@ -23,15 +25,20 @@ if ($search === '' || empty($search_result)) {
     $search = 'Ничего не найдено по вашему запросу';
 }
 
-$pagination = get_pagination_list($cur_page, $count_lots_from_search, $pagination_limit);
+$page_count = ceil($count_lots_from_search / $pagination_limit);
+$pages = range(1, $page_count);
+
+if (!in_array($cur_page, $pages)) {
+    header("Location: /404.php");
+}
 
 $content = include_template('search.php', [
     'categories' => $categories,
     'search' => $search,
     'search_result' => $search_result,
     'cur_page' => $cur_page,
-    'count_lots' => $count_lots_from_search,
-    'pagination' => $pagination
+    'page_count' => $page_count,
+    'pages' => $pages
 ]);
 
 $layout_content = include_template('layout.php', [

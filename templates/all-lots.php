@@ -43,18 +43,20 @@
                 <?php endforeach; ?>
             </ul>
         </section>
-        <?php if (isset($pagination_limit['page_count']) && $pagination_limit['page_count'] > 1) :
-            ?>)
+        <?php if ($page_count > 1) : ?>
             <ul class="pagination-list">
-                <li class="pagination-item pagination-item-prev"><a href="<?= 'all-lots.php?category=' . htmlspecialchars($category['id']) . '&page=' . $pagination['prev'] ?>">Назад</a></li>
-                <?php foreach ($pagination['pages'] as $pages) : ?>
-                    <?php if ($pages === $pagination['cur_page']) : ?>
-                        <li class="pagination-item pagination-item-active"><a><?= $pages; ?></a></li>
-                    <?php else : ?>
-                        <li class="pagination-item"><a href="<?= 'all-lots.php?category=' . htmlspecialchars($category['id']) . '&page=' . $pages ?>"><?= $pages; ?></a></li>
+                <?php foreach ($categories as $category) : ?>
+                    <?php if ($category_id === $category['id']) : ?>
+                <li class="pagination-item pagination-item-prev">
+                    <a <?php if ($cur_page != 1) : ?>href="<?= 'all-lots.php?category=' . htmlspecialchars($category['id']) . '&page=' . $cur_page - 1; ?><?php endif; ?>">Назад</a></li>
+
+                    <?php foreach ($pages as $page) : ?>
+                        <li class="pagination-item <?php if ($page == $cur_page) : ?>pagination-item-active<?php endif; ?>"><a href="<?= 'all-lots.php?category=' . htmlspecialchars($category['id']) . '&page=' . $page; ?>"><?= $page; ?></a></li>
+                    <?php endforeach; ?>
+
+                <li class="pagination-item pagination-item-next"><a <?php if ($cur_page < $page_count) : ?>href="<?= 'all-lots.php?category=' . htmlspecialchars($category['id']) . '&page=' . $cur_page + 1; ?>"<?php endif; ?>>Вперед</a></li>
                     <?php endif; ?>
                 <?php endforeach; ?>
-                <li class="pagination-item pagination-item-next"><a href="<?= 'all-lots.php?category=' . htmlspecialchars($category['id']) . '&page=' . $pages ?>">Вперед</a></li>
             </ul>
         <?php endif; ?>
     </div>

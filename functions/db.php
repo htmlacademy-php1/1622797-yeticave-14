@@ -26,8 +26,8 @@ function connect_db(array $config): mysqli
  */
 function get_categories(mysqli $link): array
 {
-    $sqlCat = 'SELECT * FROM categories';
-    $result = mysqli_query($link, $sqlCat);
+    $sql = 'SELECT * FROM categories';
+    $result = mysqli_query($link, $sql);
     if (!$result) {
         print("Ошибка MySQL: " . mysqli_error($link));
         exit();
@@ -44,13 +44,13 @@ function get_categories(mysqli $link): array
  */
 function get_lots(mysqli $link): array
 {
-    $sqlLots = 'SELECT l.id, l.creation_time, l.name as lot_name, l.begin_price, l.img, l.date_completion,
+    $sql = 'SELECT l.id, l.creation_time, l.name as lot_name, l.begin_price, l.img, l.date_completion,
        l.category_id, c.name as cat_name
     FROM lots l
     JOIN categories c ON c.id = l.category_id
     WHERE l.date_completion > NOW() GROUP BY (l.id)
     ORDER BY l.creation_time DESC LIMIT 6';
-    $result = mysqli_query($link, $sqlLots);
+    $result = mysqli_query($link, $sql);
     if (!$result) {
         print("Ошибка MySQL: " . mysqli_error($link));
         exit();
@@ -417,9 +417,9 @@ function get_finish_bets(mysqli $link): array
 /**
  * Фукнция получает лоты по категориям
  * @param mysqli $link Соединение с БД
- * @param string $category_id
- * @param int $cur_page
- * @param int $pagination_limit Получает лимит пагинации
+ * @param string $category_id Получает id категории
+ * @param int $cur_page Получает текущую страницу
+ * @param int $pagination_limit Получает лимит количества лотов
  * @return array Возвращает лоты по категориям
  */
 function get_lot_by_category(mysqli $link, string $category_id, int $cur_page, int $pagination_limit): array
@@ -430,7 +430,8 @@ function get_lot_by_category(mysqli $link, string $category_id, int $cur_page, i
        lots.category_id, lots.creation_time, categories.name AS cat_name
     FROM lots
     JOIN categories ON lots.category_id = categories.id
-    WHERE lots.category_id =' . $category_id . ' LIMIT ' . $pagination_limit .  ' OFFSET ' . $offset;
+    WHERE lots.category_id =' . $category_id . ' AND lots.date_completion > NOW() ORDER BY lots.creation_time DESC
+    LIMIT ' . $pagination_limit . ' OFFSET '  . $offset;
 
     $result = mysqli_query($link, $sql);
 

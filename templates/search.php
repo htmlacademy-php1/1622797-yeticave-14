@@ -35,17 +35,16 @@
                 <?php endforeach; ?>
             </ul>
         </section>
-        <?php if (isset($pagination_limit['page_count']) && $pagination_limit['page_count'] > 1) : ?>
+        <?php if ($page_count > 1) : ?>
         <ul class="pagination-list">
-            <li class="pagination-item pagination-item-prev"><a href="<?= 'search.php?search=' . htmlspecialchars($search) . '&page=' . $pagination['prev'] ?>">Назад</a></li>
-            <?php foreach ($pagination['pages'] as $pages) : ?>
-                <?php if ($pages === $pagination['cur_page']) : ?>
-                    <li class="pagination-item pagination-item-active"><a><?= $pages; ?></a></li>
-                <?php else : ?>
-                    <li class="pagination-item"><a href="<?= 'search.php?search=' . htmlspecialchars($search) . '&page=' . $pages ?>"><?= $pages; ?></a></li>
-                <?php endif; ?>
+            <li class="pagination-item pagination-item-prev">
+                <a <?php if ($cur_page != 1) : ?>href="<?= 'search.php?search=' . htmlspecialchars($search) . '&page=' . $cur_page - 1; ?><?php endif; ?>">Назад</a></li>
+
+            <?php foreach ($pages as $page) : ?>
+                <li class="pagination-item <?php if ($page == $cur_page) : ?>pagination-item-active<?php endif; ?>"><a href="<?= 'search.php?search=' . htmlspecialchars($search) . '&page=' . $page; ?>"><?= $page; ?></a></li>
             <?php endforeach; ?>
-            <li class="pagination-item pagination-item-next"><a href="<?= 'search.php?search=' . htmlspecialchars($search) . '&page=' . $pages ?>">Вперед</a></li>
+
+            <li class="pagination-item pagination-item-next"><a <?php if ($cur_page < $page_count) : ?>href="<?= 'search.php?search=' . htmlspecialchars($search) . '&page=' . $cur_page + 1; ?>"<?php endif; ?>>Вперед</a></li>
         </ul>
         <?php endif; ?>
     </div>
