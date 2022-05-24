@@ -1,14 +1,15 @@
 <?php
+
 /**
  * @var mysqli $link
  */
+
 require_once __DIR__ . '/init.php';
 
 $categories = get_categories($link);
 $errors = [];
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-
     $signup_form = filter_input_array(INPUT_POST, [
         'email' => FILTER_DEFAULT,
         'password' => FILTER_DEFAULT,
@@ -19,7 +20,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $errors = validate_signup_form($link, $signup_form);
     if (!$errors) {
         add_user($link, $signup_form);
-        header("Location: /login.php");
+        header("Location: /");
         exit();
     }
 }

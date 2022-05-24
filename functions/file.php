@@ -3,7 +3,7 @@
 /**
  * Функция осуществляет добавление в папку uploads картинки
  * @param array files Передает картинку из формы
- * @return string Возвращает новое название картинки и ее местоположение
+ * @return string|null Возвращает новое название картинки и ее местоположение
  */
 function upload_image(array $files): ?string
 {

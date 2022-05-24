@@ -1,7 +1,9 @@
 <?php
+
 /**
  * @var mysqli $link
  */
+
 require_once __DIR__ . '/init.php';
 
 $categories = get_categories($link);
@@ -15,7 +17,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
     $errors = validate_login_form($link, $login_form);
     if (!$errors && authentication($link, $login_form)) {
-        header("Location: /index.php");
+        header("Location: /");
         exit();
     }
 }
