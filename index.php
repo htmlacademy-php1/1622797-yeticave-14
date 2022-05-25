@@ -5,6 +5,7 @@
  */
 
 require_once __DIR__ . '/init.php';
+require_once __DIR__ . '/getwinner.php';
 
 $user_name = check_session_name();
 $categories = get_categories($link);
