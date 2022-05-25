@@ -9,10 +9,9 @@ require_once __DIR__ . '/init.php';
 
 $categories = get_categories($link);
 $pagination_limit = $config['pagination_limit'];
-$user_name = check_session_name($_SESSION);
+$user_name = check_session_name();
 
 $cur_page = $_GET['page'] ?? 1;
-check_current_page($cur_page);
 
 $search = filter_input(INPUT_GET, 'search', FILTER_SANITIZE_SPECIAL_CHARS);
 $search = trim(strip_tags($search));

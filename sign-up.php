@@ -6,6 +6,7 @@
 
 require_once __DIR__ . '/init.php';
 
+$user_name = check_session_name();
 $categories = get_categories($link);
 $errors = [];
 
@@ -20,7 +21,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $errors = validate_signup_form($link, $signup_form);
     if (!$errors) {
         add_user($link, $signup_form);
-        header("Location: /");
+        header("Location: /login.php");
         exit();
     }
 }

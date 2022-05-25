@@ -18,14 +18,14 @@
                         <img src="<?= htmlspecialchars($active_lot['img']); ?>" width="54" height="40"
                              alt="<?= htmlspecialchars($active_lot['lot_name']); ?>">
                     </div>
-                    <h3 class="rates__title"><a href="lot.php?id=<?= $active_lot['lot_id']; ?>">
-                            <?= $active_lot['lot_name']; ?></a></h3>
+                    <h3 class="rates__title"><a href="lot.php?id=<?= htmlspecialchars($active_lot['lot_id']); ?>">
+                            <?= htmlspecialchars($active_lot['lot_name']); ?></a></h3>
                 </td>
                 <td class="rates__category">
                     <?= htmlspecialchars($active_lot['cat_name']); ?>
                 </td>
                 <td class="rates__timer">
-                    <?php $interval = get_dt_range($active_lot['date_completion'], date('H:i')); ?>
+                    <?php $interval = get_dt_range(htmlspecialchars($active_lot['date_completion']), date('H:i')); ?>
                     <div class="timer <?php if ($interval['hour'] < 1) {
                         echo 'timer--finishing';
                     } ?>"><?= str_pad($interval['hour'], 2, '0', STR_PAD_LEFT) ?>:
@@ -33,10 +33,10 @@
                     </div>
                 </td>
                 <td class="rates__price">
-                    <?= lot_cost($active_lot['price']); ?>
+                    <?= lot_cost(htmlspecialchars($active_lot['price'])); ?>
                 </td>
                 <td class="rates__time">
-                    <?= get_time_bet($active_lot['creation_time'], 'NOW'); ?>
+                    <?= get_time_bet(htmlspecialchars($active_lot['creation_time']), 'NOW'); ?>
                 </td>
             </tr>
             <?php endforeach; ?>
@@ -48,8 +48,8 @@
                              alt="<?= htmlspecialchars($win_lot['lot_name']); ?>">
                     </div>
                     <div>
-                        <h3 class="rates__title"><a href="lot.php?id=<?= $win_lot['lot_id']; ?>">
-                                <?= $win_lot['lot_name']; ?></a></h3>
+                        <h3 class="rates__title"><a href="lot.php?id=<?= htmlspecialchars($win_lot['lot_id']); ?>">
+                                <?= htmlspecialchars($win_lot['lot_name']); ?></a></h3>
                         <p><?= htmlspecialchars($win_lot['contact']); ?>></p>
                     </div>
                 </td>
@@ -60,10 +60,10 @@
                     <div class="timer timer--win">Ставка выиграла</div>
                 </td>
                 <td class="rates__price">
-                    <?= lot_cost($win_lot['price']); ?>
+                    <?= lot_cost(htmlspecialchars($win_lot['price'])); ?>
                 </td>
                 <td class="rates__time">
-                    <?= get_time_bet($win_lot['creation_time'], 'NOW'); ?>
+                    <?= get_time_bet(htmlspecialchars($win_lot['creation_time']), 'NOW'); ?>
                 </td>
             </tr>
             <?php endforeach; ?>
@@ -74,8 +74,8 @@
                         <img src="<?= htmlspecialchars($finish_lot['img']); ?>" width="54" height="40"
                              alt="<?= htmlspecialchars($finish_lot['lot_name']); ?>">
                     </div>
-                    <h3 class="rates__title"><a href="lot.php?id=<?= $finish_lot['lot_id']; ?>">
-                            <?= $finish_lot['lot_name']; ?></a></h3>
+                    <h3 class="rates__title"><a href="lot.php?id=<?= htmlspecialchars($finish_lot['lot_id']); ?>">
+                            <?= htmlspecialchars($finish_lot['lot_name']); ?></a></h3>
                 </td>
                 <td class="rates__category">
                     <?= htmlspecialchars($finish_lot['cat_name']); ?>
@@ -84,10 +84,10 @@
                     <div class="timer timer--end">Торги окончены</div>
                 </td>
                 <td class="rates__price">
-                    <?= lot_cost($finish_lot['price']); ?>
+                    <?= lot_cost(htmlspecialchars($finish_lot['price'])); ?>
                 </td>
                 <td class="rates__time">
-                    <?= get_time_bet($finish_lot['creation_time'], 'NOW'); ?>
+                    <?= get_time_bet(htmlspecialchars($finish_lot['creation_time']), 'NOW'); ?>
                 </td>
             </tr>
             <?php endforeach; ?>

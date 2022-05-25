@@ -88,22 +88,6 @@ function get_noun_plural_form(int $number, string $one, string $two, string $man
 
 
 /**
- * Функция приводит тип текущей страницы к целому числу
- * @param int $cur_page Текущая страница
- * @return int Если номер страницы меньше или равен нулю, то переводим на 404 страницу
- */
-function check_current_page(int $cur_page): int
-{
-    if ($cur_page <= 0) {
-        header("Location: /404.php");
-        exit();
-    }
-
-    return $cur_page;
-}
-
-
-/**
  * Функция приводит значение к человокочитаемому формату времени
  * @param string $date Принимает дату в прошлом
  * @param string $cur_date Принимает текущаю дату

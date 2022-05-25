@@ -30,6 +30,9 @@ function validate_login_email(string $email): ?string
     if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
         return "Некорректно введен e-mail";
     }
+    if (mb_strlen($email) > 64) {
+        return "Длина не должна превышать 64 символов";
+    }
 
     return null;
 }
@@ -53,6 +56,9 @@ function validate_password(mysqli $link, string $email, string $password): ?stri
     }
     if (!password_verify($password, $user['password'])) {
         return "Введен неверный пароль";
+    }
+    if (mb_strlen($password) > 64) {
+        return "Длина не должна превышать 64 символов";
     }
 
     return null;

@@ -7,12 +7,11 @@
 
 require_once __DIR__ . '/init.php';
 
-$user_name = check_session_name($_SESSION);
+$user_name = check_session_name();
 $categories = get_categories($link);
 $pagination_limit = $config['pagination_limit'];
 
 $cur_page = $_GET['page'] ?? 1;
-check_current_page($cur_page);
 
 $category_id = $_GET['category'];
 

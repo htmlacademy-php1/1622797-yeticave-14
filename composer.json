@@ -16,7 +16,8 @@
     ],
     "require": {
       "ext-mysqli": "*",
-      "ext-fileinfo": "*"
+      "ext-fileinfo": "*",
+        "symfony/mailer": "^6.0"
     },
     "require-dev": {
         "squizlabs/php_codesniffer": "*",
