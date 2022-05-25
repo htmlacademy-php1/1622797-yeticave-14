@@ -14,7 +14,7 @@
         <header class="main-header">
             <div class="main-header__container container">
                 <h1 class="visually-hidden">YetiCave</h1>
-                <a class="main-header__logo">
+                <a href="/" class="main-header__logo">
                     <img src="../img/logo.svg" width="160" height="39" alt="Логотип компании YetiCave">
                 </a>
                 <form class="main-header__search" method="get" action="search.php" autocomplete="off">
@@ -55,7 +55,8 @@
             <ul class="nav__list container">
                 <?php foreach ($categories as $category) : ?>
                     <li class="nav__item">
-                        <a href="all-lots.php?category=<?= $category['id']; ?>"><?= $category['name']; ?></a>
+                        <a href="all-lots.php?category=<?= $category['id']; ?>">
+                            <?= htmlspecialchars($category['name']); ?></a>
                     </li>
                 <?php endforeach; ?>
             </ul>

@@ -1,6 +1,12 @@
 <?php
+
+/**
+ * @var mysqli $link
+ */
+
 require_once __DIR__ . '/init.php';
 
+$user_name = check_session_name();
 $categories = get_categories($link);
 $errors = [];
 
@@ -11,7 +17,6 @@ if ($user_id === null) {
 }
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-
     $lot_form_data = filter_input_array(INPUT_POST, [
         'name' => FILTER_DEFAULT,
         'category_id' => FILTER_DEFAULT,

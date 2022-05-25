@@ -35,5 +35,8 @@ function authentication(mysqli $link, array $login_form): bool
  */
 function check_session_name(): ?string
 {
-    return $_SESSION['name'] ?? null;
+    if (!empty($session)) {
+        return $session['name'];
+    }
+    return null;
 }

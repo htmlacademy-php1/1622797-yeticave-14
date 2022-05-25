@@ -6,7 +6,7 @@
 
 require_once __DIR__ . '/init.php';
 
-$user_name = check_session_name($_SESSION);
+$user_name = check_session_name();
 $user_id = get_user_id_session();
 $categories = get_categories($link);
 

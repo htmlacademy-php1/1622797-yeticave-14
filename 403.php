@@ -1,4 +1,9 @@
 <?php
+
+/**
+ * @var mysqli $link
+ */
+
 require_once __DIR__ . '/init.php';
 
 $categories = get_categories($link);

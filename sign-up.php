@@ -1,14 +1,16 @@
 <?php
+
 /**
  * @var mysqli $link
  */
+
 require_once __DIR__ . '/init.php';
 
+$user_name = check_session_name();
 $categories = get_categories($link);
 $errors = [];
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-
     $signup_form = filter_input_array(INPUT_POST, [
         'email' => FILTER_DEFAULT,
         'password' => FILTER_DEFAULT,

@@ -88,52 +88,10 @@ function get_noun_plural_form(int $number, string $one, string $two, string $man
 
 
 /**
- * Функция приводит тип текущей страницы к целому числу
- * @param string current_page Переменная с текущей страницей
- * @return int Если номер страницы меньше или равен нулю, то переводим на 404 страницу
- */
-function check_current_page(string $cur_page): int
-{
-    $cur_page = (int)$cur_page;
-    if ($cur_page <= 0) {
-        header("Location: /404.php");
-        exit();
-    }
-
-    return $cur_page;
-}
-
-
-/**
- * Функуция получает массив переменных для пагинации
- * @param int cur_page Получает текущую страницу
- * @param mixed count_lots_from_search Получает количество лотов на странице
- * @param mixed pagination_limit Получает количество лотов на одной странице
- * @return array Возвращает массив данных для пагинации на странице
- */
-function get_pagination_list(int $cur_page, $count_lots_from_search, $pagination_limit): array
-{
-    $page_count = ceil($count_lots_from_search / $pagination_limit);
-    $pages = range(1, $page_count);
-
-    $prev = ($cur_page > 1) ? $cur_page - 1 : $cur_page;
-    $next = ($cur_page < $page_count) ? $cur_page + 1 : $cur_page;
-
-    return [
-        'prev_page' => $prev,
-        'next_page' => $next,
-        'page_count' => $page_count,
-        'pages' => $pages,
-        'cur_page' => $cur_page,
-        'lot_limit' => $count_lots_from_search
-    ];
-}
-
-
-/**
- * @param string $date
- * @param string $cur_date
- * @return string|null
+ * Функция приводит значение к человокочитаемому формату времени
+ * @param string $date Принимает дату в прошлом
+ * @param string $cur_date Принимает текущаю дату
+ * @return string|null Возвращает дату и время в человекочитаемом виде
  */
 function get_time_bet(string $date, string $cur_date): ?string
 {
