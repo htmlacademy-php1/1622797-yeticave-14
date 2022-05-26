@@ -144,7 +144,7 @@ function db_get_prepare_stmt($link, $sql, $data = [])
  * @param mixed files Передает картинку из формы
  * @return bool Возвращает удачное добавление лота или ошибку
  */
-function add_lot(mysqli $link, array $lot_form_data, $user_id): bool
+function add_lot(mysqli $link, array $lot_form_data, int $user_id): bool
 {
     $lot_form_data['img'] = upload_image($_FILES);
     $lot_form_data['date_completion'] = date("Y-m-d H:i:s", strtotime($lot_form_data['date_completion']));
@@ -318,93 +318,24 @@ function get_lots_bets(mysqli $link, int $lot_id): array
 
 
 /**
- * Функция получает активные ставки пользователя по id
+ * Функция получает лоты пользователя по его id
  * @param mysqli $link Соединение с БД
+ * @param int $user_id Получает id пользователя
  * @return array Возвращает массив со ставками пользователя
  */
-function get_active_bets(mysqli $link): array
+function get_bets_user(mysqli $link, int $user_id): array
 {
-    $user_id = get_user_id_session();
-
-    $sql = 'SELECT lots.id AS lot_id, lots.name AS lot_name, lots.img, lots.date_completion, bets.user_id,
-    MAX(bets.price) AS price, bets.creation_time, categories.name AS cat_name
+    $sql = 'SELECT lots.id AS lot_id, lots.name AS lot_name, lots.winner_id, lots.img, lots.date_completion,
+       bets.user_id, MAX(bets.price) AS price, bets.creation_time, users.contact, users.id AS user_id,
+       categories.name AS cat_name
     FROM bets
     JOIN lots ON bets.lot_id = lots.id
     JOIN categories ON lots.category_id = categories.id
     JOIN users ON bets.user_id = users.id
-    GROUP BY bets.lot_id, bets.user_id, bets.creation_time, lots.winner_id
-    HAVING bets.user_id = ? AND lots.date_completion > NOW()
-    ORDER BY bets.creation_time DESC';
+    GROUP BY bets.lot_id, bets.user_id, lots.winner_id, bets.creation_time
+    HAVING bets.user_id =' . $user_id . ' ORDER BY bets.creation_time DESC ';
 
-    $stmt = mysqli_prepare($link, $sql);
-    mysqli_stmt_bind_param($stmt, 'i', $user_id);
-    mysqli_stmt_execute($stmt);
-    $result = mysqli_stmt_get_result($stmt);
-
-    if (!$result) {
-        print("Ошибка MYSQL: " . mysqli_error($link));
-        exit();
-    }
-
-    return mysqli_fetch_all($result, MYSQLI_ASSOC);
-}
-
-
-/**
- * Функция получает выйгранные лоты по id пользователя
- * @param mysqli $link Соединение с БД
- * @return array Возвращает массив с выйгранными лотами пользователя
- */
-function get_win_bets(mysqli $link): array
-{
-    $user_id = get_user_id_session();
-
-    $sql = 'SELECT lots.id AS lot_id, lots.name AS lot_name, lots.img, lots.date_completion, bets.user_id,
-    MAX(bets.price) AS price, bets.creation_time, categories.name AS cat_name, users.contact
-    FROM bets
-    JOIN lots ON bets.lot_id = lots.id
-    JOIN categories ON lots.category_id = categories.id
-    JOIN users ON bets.user_id = users.id
-    GROUP BY bets.lot_id, bets.user_id, bets.creation_time, lots.winner_id
-    HAVING bets.user_id = ? AND lots.winner_id = ? ORDER BY bets.creation_time DESC';
-
-    $stmt = mysqli_prepare($link, $sql);
-    mysqli_stmt_bind_param($stmt, 'ii', $user_id, $user_id);
-    mysqli_stmt_execute($stmt);
-    $result = mysqli_stmt_get_result($stmt);
-
-    if (!$result) {
-        print("Ошибка MYSQL: " . mysqli_error($link));
-        exit();
-    }
-
-    return mysqli_fetch_all($result, MYSQLI_ASSOC);
-}
-
-
-/**
- * Функция получает лоты истекшие по времени конкретного пользователя
- * @param mysqli $link Соединение с БД
- * @return array Возвращает массив с лотами у которых истекло время
- */
-function get_finish_bets(mysqli $link): array
-{
-    $user_id = get_user_id_session();
-
-    $sql = 'SELECT lots.id AS lot_id, lots.name AS lot_name, lots.img, lots.date_completion, bets.user_id,
-    MAX(bets.price) AS price, bets.creation_time, categories.name AS cat_name
-    FROM bets
-    JOIN lots ON bets.lot_id = lots.id
-    JOIN categories ON lots.category_id = categories.id
-    JOIN users ON bets.user_id = users.id
-    GROUP BY bets.lot_id, bets.user_id, bets.creation_time, lots.winner_id
-    HAVING bets.user_id = ? AND lots.date_completion < NOW() AND lots.winner_id != ?
-    ORDER BY bets.creation_time DESC';
-
-    $stmt = mysqli_prepare($link, $sql);
-    mysqli_stmt_bind_param($stmt, 'ii', $user_id, $user_id);
-    mysqli_stmt_execute($stmt);
-    $result = mysqli_stmt_get_result($stmt);
+    $result = mysqli_query($link, $sql);
 
     if (!$result) {
         print("Ошибка MYSQL: " . mysqli_error($link));
@@ -498,15 +429,16 @@ function hidden_bets_form(
 
 
 /**
- * Функция возвращает список лотов без победителей
+ * Функция получает список лотов без победителей
  * @param mysqli $link Соединение с БД
  * @return array Возвращает массив лотов без победителей
  */
 function get_lots_whithout_winners(mysqli $link): array
 {
-    $sql = 'SELECT id as lot_id, name as lot_name, winner_id
-    FROM lots
-    WHERE winner_id IS NULL AND lots.date_completion <= CURRENT_DATE()';
+    $sql = 'SELECT l.id AS lot_id, l.name AS lot_name, l.winner_id, l.date_completion
+    FROM lots l
+    WHERE winner_id IS NULL
+	ORDER BY l.date_completion <= CURRENT_DATE()';
 
     $result = mysqli_query($link, $sql);
 
@@ -520,15 +452,15 @@ function get_lots_whithout_winners(mysqli $link): array
 
 
 /**
- * Функция возвращает последнюю ставку лота
+ * Функция получает последнюю ставку лота
  * @param mysqli $link Соединение с БД
  * @param int $lot_id Получает id лота
  * @return array|null Возвращает последнюю ставку конкретного лота
  */
 function get_last_bets(mysqli $link, int $lot_id): ?array
 {
-    $sql = 'SELECT users.id as user_id, users.name as user_name, users.email, bets.price as max_price,
-    bets.lot_id as lot_id, lots.name
+    $sql = 'SELECT users.id AS user_id, users.name AS user_name, users.email, bets.price AS max_price,
+    bets.lot_id AS lot_id, lots.name
     FROM bets
     JOIN lots ON bets.lot_id = lots.id
     JOIN users ON bets.user_id = users.id

@@ -54,7 +54,7 @@
                     . htmlspecialchars($category['id']) . '&page=' . $cur_page - 1; ?><?php endif; ?>">Назад</a></li>
 
                     <?php foreach ($pages as $page) : ?>
-                        <li class="pagination-item <?php if ($page === $cur_page) : ?>pagination-item-active
+                        <li class="pagination-item <?php if ($page == $cur_page) : ?>pagination-item-active
                         <?php endif; ?>"><a href="<?= 'all-lots.php?category=' . htmlspecialchars($category['id']) .
                             '&page=' . $page; ?>"><?= $page; ?></a></li>
                     <?php endforeach; ?>

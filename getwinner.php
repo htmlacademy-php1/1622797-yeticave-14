@@ -5,11 +5,11 @@
  * @var mysqli $config
  */
 
+require_once __DIR__ . '/init.php';
+
 use Symfony\Component\Mailer\Mailer;
 use Symfony\Component\Mailer\Transport;
 use Symfony\Component\Mime\Email;
-
-require_once __DIR__ . '/init.php';
 
 $dsn = 'smtp://' . $config['dsn']['login'] . ':' . $config['dsn']['password'] . ':' . $config['dsn']['server'] .
     ':' . $config['dsn']['port'];

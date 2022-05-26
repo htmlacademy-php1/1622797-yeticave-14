@@ -13,5 +13,9 @@ require_once __DIR__ . '/functions/validate_form.php';
 require_once __DIR__ . '/functions/validate_signup.php';
 require_once __DIR__ . '/functions/calculate.php';
 
-$config = require_once __DIR__ . '/config.php';
+if (!file_exists(__DIR__ . '/config.php')) {
+    exit('Создайте файл config.php на основе файла config.sample.php и сконфигурируйте его');
+}
+
+$config = require __DIR__ . '/config.php';
 $link = connect_db($config['db']);
