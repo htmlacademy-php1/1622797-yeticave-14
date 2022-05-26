@@ -437,8 +437,7 @@ function get_lots_whithout_winners(mysqli $link): array
 {
     $sql = 'SELECT l.id AS lot_id, l.name AS lot_name, l.winner_id, l.date_completion
     FROM lots l
-    WHERE winner_id IS NULL
-	ORDER BY l.date_completion <= CURRENT_DATE()';
+    WHERE winner_id IS NULL AND l.date_completion <= CURRENT_DATE()';
 
     $result = mysqli_query($link, $sql);
 
