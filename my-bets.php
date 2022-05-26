@@ -15,6 +15,7 @@ $user_bets = get_bets_user($link, $user_id);
 $content = include_template('my-bets.php', [
     'categories' => $categories,
     'user_bets' => $user_bets,
+    'link' => $link
 ]);
 
 $layout_content = include_template('layout.php', [

@@ -28,7 +28,8 @@
                                     <?= htmlspecialchars($bet['lot_name']); ?>
                                 </a>
                             </h3>
-                            <p><?= htmlspecialchars($bet['contact']); ?></p>
+                            <?php $contact = get_lot_creator_contacts($link, $bet['lot_id']) ;?>
+                            <p><?= htmlspecialchars($contact['contact']); ?></p>
                         </div>
                     <?php else : ?>
                         <h3 class="rates__title">

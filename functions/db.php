@@ -327,7 +327,7 @@ function get_bets_user(mysqli $link, int $user_id): array
 {
     $sql = 'SELECT lots.id AS lot_id, lots.name AS lot_name, lots.winner_id, lots.img, lots.date_completion,
        bets.user_id, MAX(bets.price) AS price, bets.creation_time, users.contact, users.id AS user_id,
-       categories.name AS cat_name
+       lots.user_id AS lot_creator, categories.name AS cat_name
     FROM bets
     JOIN lots ON bets.lot_id = lots.id
     JOIN categories ON lots.category_id = categories.id
@@ -460,7 +460,7 @@ function get_lots_whithout_winners(mysqli $link): array
 function get_last_bets(mysqli $link, int $lot_id): ?array
 {
     $sql = 'SELECT users.id AS user_id, users.name AS user_name, users.email, bets.price AS max_price,
-    bets.lot_id AS lot_id, lots.name
+    bets.lot_id AS lot_id, lots.name AS lot_name
     FROM bets
     JOIN lots ON bets.lot_id = lots.id
     JOIN users ON bets.user_id = users.id
@@ -490,4 +490,24 @@ function add_winner_lot(mysqli $link, int $user_id, int $lot_id): bool
     $sql = 'UPDATE lots SET winner_id =' . $user_id . ' WHERE id =' . $lot_id;
 
     return mysqli_query($link, $sql);
+}
+
+
+/**
+ * Функция получает контакты создателя лота
+ * @param mysqli $link Соединение с БД
+ * @param int $lot_id Передает id лота
+ * @return array|null Возвращает контакты пользователя или ошибку
+ */
+function get_lot_creator_contacts(mysqli $link, int $lot_id): ?array
+{
+    $sql = 'SELECT users.contact FROM lots JOIN users ON lots.user_id = users.id WHERE lots.id =' . $lot_id;
+    $result = mysqli_query($link, $sql);
+
+    if (!$result) {
+        print("Ошибка MYSQL: " . mysqli_error($link));
+        exit();
+    }
+
+    return mysqli_fetch_array($result, MYSQLI_ASSOC);
 }
