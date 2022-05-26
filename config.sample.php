@@ -10,10 +10,11 @@ return [
 
     'pagination_limit' => 9,
 
-    'dsn' => [
+    'mail' => [
         'login' => '',
+        'host' => 'yandex.ru',
         'password' => '',
-        'server' => '@smtp.yandex.ru',
+        'smtp' => 'smtp.yandex.ru',
         'port' => '465'
     ]
 ];

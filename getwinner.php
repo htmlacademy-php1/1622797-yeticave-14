@@ -9,10 +9,11 @@ use Symfony\Component\Mailer\Mailer;
 use Symfony\Component\Mailer\Transport;
 use Symfony\Component\Mime\Email;
 
+require_once __DIR__ . '/vendor/autoload.php';
 require_once __DIR__ . '/init.php';
 
-$dsn = 'smtp://' . $config['dsn']['login'] . ':' . $config['dsn']['password'] . ':' . $config['dsn']['server'] .
-    ':' . $config['dsn']['port'];
+$dsn = 'smtp://' . $config['mail']['login'] . '@' . $config['mail']['host'] . ':' .$config['mail']['password'] .
+    ':@' . $config['mail']['smtp'] . ':' . $config['mail']['port'];
 $transport = Transport::fromDsn($dsn);
 
 $lots = get_lots_whithout_winners($link);
