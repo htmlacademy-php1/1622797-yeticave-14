@@ -50,13 +50,13 @@
                             Ставка выиграла
                         </div>
 
-                    <?php elseif ($bet['winner_id'] === null && $interval > 1) : ?>
+                    <?php elseif ($bet['winner_id'] === null && $interval['hour'] > 1) : ?>
                         <div class="timer">
                             <?= str_pad($interval['hour'], 2, '0', STR_PAD_LEFT) ?>:
                             <?= str_pad($interval['minute'], 2, '0', STR_PAD_LEFT) ?>
                         </div>
 
-                    <?php elseif ($bet['winner_id'] === null && $interval < 1) : ?>
+                    <?php elseif ($bet['winner_id'] === null && $interval['hour'] < 1) : ?>
                         <div class="timer timer--finishing">
                             <?= str_pad($interval['hour'], 2, '0', STR_PAD_LEFT) ?>:
                             <?= str_pad($interval['minute'], 2, '0', STR_PAD_LEFT) ?>
@@ -66,7 +66,7 @@
                         <div class="timer timer--end">
                             Торги окончены
                         </div>
-                    <?php endif;?>
+                    <?php endif; ?>
                 </td>
                 <td class="rates__price">
                     <?= lot_cost(htmlspecialchars($bet['price'])); ?>

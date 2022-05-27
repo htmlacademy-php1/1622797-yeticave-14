@@ -9,12 +9,4 @@ return [
     ],
 
     'pagination_limit' => 9,
-
-    'mail' => [
-        'login' => '',
-        'host' => 'yandex.ru',
-        'password' => '',
-        'smtp' => 'smtp.yandex.ru',
-        'port' => '465'
-    ]
 ];
