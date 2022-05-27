@@ -12,8 +12,7 @@ use Symfony\Component\Mime\Email;
 require_once __DIR__ . '/vendor/autoload.php';
 require_once __DIR__ . '/init.php';
 
-$dsn = 'smtp://' . $config['mail']['login'] . '@' . $config['mail']['host'] . ':' .$config['mail']['password'] .
-    ':@' . $config['mail']['smtp'] . ':' . $config['mail']['port'];
+$dsn = 'smtp://21225020ba29e9:7d878515445200@smtp.mailtrap.io:2525?encryption=tls&auth_mode=login';
 $transport = Transport::fromDsn($dsn);
 
 $lots = get_lots_whithout_winners($link);
