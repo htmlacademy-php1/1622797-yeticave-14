@@ -12,8 +12,8 @@ $errors = [];
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $login_form = filter_input_array(INPUT_POST, [
-        'email' => FILTER_DEFAULT,
-        'password' => FILTER_DEFAULT
+        'email' => FILTER_SANITIZE_SPECIAL_CHARS,
+        'password' => FILTER_SANITIZE_SPECIAL_CHARS
     ], true);
 
     $errors = validate_login_form($link, $login_form);

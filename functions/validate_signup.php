@@ -36,8 +36,8 @@ function validate_signup_email(mysqli $link, string $email): ?string
     if (get_user_by_email($link, $email)) {
         return "E-mail используется другим пользователем";
     }
-    if (mb_strlen($email) > 64) {
-        return "Длина не должна превышать 64 символов";
+    if (mb_strlen($email) > 128) {
+        return "Длина не должна превышать 128 символов";
     }
 
     return null;
@@ -54,10 +54,9 @@ function validate_contact(string $value): ?string
     if ($value === '') {
         return "Поле необходимо заполнить";
     }
-    if (mb_strlen($value) > 122) {
-        return "Длина не должна превышать 122 символов";
+    if (mb_strlen($value) > 500) {
+        return "Длина не должна превышать 500 символов";
     }
-
     return null;
 }
 

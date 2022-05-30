@@ -51,17 +51,17 @@
                     <?php if ($category_id === $category['id']) : ?>
                 <li class="pagination-item pagination-item-prev">
                     <a <?php if ($cur_page != 1) : ?>href="<?= 'all-lots.php?category='
-                    . htmlspecialchars($category['id']) . '&page=' . $cur_page - 1; ?><?php endif; ?>">Назад</a></li>
+                    . htmlspecialchars($category['id']) . '&page=' . (string)($cur_page - 1); ?><?php endif; ?>">Назад</a></li>
 
                     <?php foreach ($pages as $page) : ?>
                         <li class="pagination-item <?php if ($page == $cur_page) : ?>pagination-item-active
                         <?php endif; ?>"><a href="<?= 'all-lots.php?category=' . htmlspecialchars($category['id']) .
-                            '&page=' . $page; ?>"><?= $page; ?></a></li>
+                            '&page=' . (string)($page); ?>"><?= $page; ?></a></li>
                     <?php endforeach; ?>
 
                 <li class="pagination-item pagination-item-next"><a <?php if ($cur_page < $page_count) : ?>
                         href="<?= 'all-lots.php?category=' . htmlspecialchars($category['id']) . '&page=' .
-                        $cur_page + 1; ?>"<?php endif; ?>>Вперед</a></li>
+                        (string)($cur_page + 1); ?>"<?php endif; ?>>Вперед</a></li>
                     <?php endif; ?>
                 <?php endforeach; ?>
             </ul>

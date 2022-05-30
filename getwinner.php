@@ -12,6 +12,7 @@ use Symfony\Component\Mime\Email;
 require_once __DIR__ . '/vendor/autoload.php';
 require_once __DIR__ . '/init.php';
 
+$base_url = $config['base_url'];
 $dsn = 'smtp://21225020ba29e9:7d878515445200@smtp.mailtrap.io:2525?encryption=tls&auth_mode=login';
 $transport = Transport::fromDsn($dsn);
 
@@ -36,7 +37,7 @@ $message->from("keks@phpdemo.ru");
 
 foreach ($winners as $winner) {
     $message->to($winner['email']);
-    $message_content = include_template('email.php', ['winner' => $winner]);
+    $message_content = include_template('email.php', ['winner' => $winner, 'base_url' => $base_url]);
     $message->html($message_content);
     $mailer->send($message);
 }

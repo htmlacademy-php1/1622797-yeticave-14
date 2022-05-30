@@ -12,10 +12,10 @@ $errors = [];
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $signup_form = filter_input_array(INPUT_POST, [
-        'email' => FILTER_DEFAULT,
-        'password' => FILTER_DEFAULT,
-        'first_name' => FILTER_DEFAULT,
-        'contact' => FILTER_DEFAULT
+        'email' => FILTER_SANITIZE_SPECIAL_CHARS,
+        'password' => FILTER_SANITIZE_SPECIAL_CHARS,
+        'first_name' => FILTER_SANITIZE_SPECIAL_CHARS,
+        'contact' => FILTER_SANITIZE_SPECIAL_CHARS
     ], true);
 
     $errors = validate_signup_form($link, $signup_form);
