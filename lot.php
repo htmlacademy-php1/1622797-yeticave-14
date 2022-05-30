@@ -18,7 +18,7 @@ if (!isset($lot_data['id'])) {
 }
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $form_bets = filter_input_array(INPUT_POST, ['price' => FILTER_DEFAULT], true);
+    $form_bets = filter_input_array(INPUT_POST, ['price' => FILTER_SANITIZE_NUMBER_INT], true);
     $errors = validate_form_bets($form_bets, $lot_data);
 
     if (!$errors) {

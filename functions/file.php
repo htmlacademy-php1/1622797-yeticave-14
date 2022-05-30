@@ -16,6 +16,9 @@ function upload_image(array $files): ?string
         $filename = uniqid() . '.png';
     }
 
-    move_uploaded_file($tmp_name, 'uploads/' . $filename);
+    if (!move_uploaded_file($tmp_name, 'uploads/' . $filename)) {
+        exit('Нужны права на запись в папку uploads');
+    }
+
     return 'uploads/' . $filename;
 }

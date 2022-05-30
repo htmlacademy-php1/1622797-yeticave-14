@@ -30,8 +30,8 @@ function validate_login_email(string $email): ?string
     if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
         return "Некорректно введен e-mail";
     }
-    if (mb_strlen($email) > 64) {
-        return "Длина не должна превышать 64 символов";
+    if (mb_strlen($email) > 128) {
+        return "Длина не должна превышать 128 символов";
     }
 
     return null;

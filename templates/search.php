@@ -12,6 +12,9 @@
     <div class="container">
         <section class="lots">
             <h2>Результаты поиска по запросу «<span><?= htmlspecialchars($search); ?></span>»</h2>
+            <?php if (count($search_result) === 0) : ?>
+            <h3>Ничего не найдено по вашему запросу</h3>
+            <?php else : ?>
             <ul class="lots__list">
                 <?php foreach ($search_result as $lot) : ?>
                     <li class="lots__item lot">
@@ -30,7 +33,9 @@
                                     </span>
                                 </div>
                                 <?php $interval = get_dt_range($lot['date_completion'], date('H:i')); ?>
-                                <div class="lot__timer timer <?php if ($interval['hour'] < 1) { echo 'timer--finishing'; } ?>">
+                                <div class="lot__timer timer <?php if ($interval['hour'] < 1) {
+    echo 'timer--finishing';
+} ?>">
                                     <?= str_pad($interval['hour'], 2, '0', STR_PAD_LEFT) ?>:
                                     <?= str_pad($interval['minute'], 2, '0', STR_PAD_LEFT) ?>
                                 </div>
@@ -39,21 +44,22 @@
                     </li>
                 <?php endforeach; ?>
             </ul>
+            <?php endif; ?>
         </section>
         <?php if ($page_count > 1) : ?>
         <ul class="pagination-list">
             <li class="pagination-item pagination-item-prev">
                 <a <?php if ($cur_page != 1) : ?>href="<?= 'search.php?search=' . htmlspecialchars($search) .
-                '&page=' . $cur_page - 1; ?><?php endif; ?>">Назад</a></li>
+                '&page=' . (string)($cur_page - 1); ?><?php endif; ?>">Назад</a></li>
 
             <?php foreach ($pages as $page) : ?>
                 <li class="pagination-item <?php if ($page == $cur_page) : ?>pagination-item-active<?php endif; ?>">
-                    <a href="<?= 'search.php?search=' . htmlspecialchars($search) . '&page=' . $page; ?>"><?= $page; ?>
+                    <a href="<?= 'search.php?search=' . htmlspecialchars($search) . '&page=' . (string)($page); ?>"><?= $page; ?>
                     </a></li>
             <?php endforeach; ?>
 
             <li class="pagination-item pagination-item-next"><a <?php if ($cur_page < $page_count) : ?>
-                    href="<?= 'search.php?search=' . htmlspecialchars($search) . '&page=' . $cur_page + 1; ?>"
+                    href="<?= 'search.php?search=' . htmlspecialchars($search) . '&page=' . (string)($cur_page + 1); ?>"
                 <?php endif; ?>>Вперед</a></li>
         </ul>
         <?php endif; ?>

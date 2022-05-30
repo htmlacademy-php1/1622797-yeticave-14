@@ -38,6 +38,21 @@ function get_categories(mysqli $link): array
 
 
 /**
+ * Функция получает массив с id категорий
+ * @param array $categories
+ * @return array Возвращает массив с существуюшими id категорий
+ */
+function get_categories_ids(array $categories): array
+{
+    $categories_ids = [];
+    foreach ($categories as $value) {
+        $categories_ids[] = $value['id'];
+    }
+    return $categories_ids;
+}
+
+
+/**
  * Функция для выбора последних 6 новых лотов
  * @param mysqli $link Отправляет запрос в БД для получения списка последних открытых лотов
  * @return array Возвращает массив с 6 последними открытыми лотами
@@ -221,6 +236,8 @@ function add_user(mysqli $link, array $signup_form): bool
  */
 function get_lot_by_search(mysqli $link, string $search, int $cur_page, int $pagination_limit): array
 {
+    $search = mysqli_real_escape_string($link, $search);
+
     $offset = $pagination_limit * ($cur_page - 1);
     $sql = 'SELECT l.id, l.name as lot_name, l.description, l.begin_price, l.img, l.date_completion, c.name as cat_name
     FROM lots l

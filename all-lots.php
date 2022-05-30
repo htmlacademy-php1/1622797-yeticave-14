@@ -9,11 +9,17 @@ require_once __DIR__ . '/init.php';
 
 $user_name = check_session_name();
 $categories = get_categories($link);
+$categories_ids = get_categories_ids($categories);
 $pagination_limit = $config['pagination_limit'];
 
-$cur_page = $_GET['page'] ?? 1;
+$cur_page = intval($_GET['page'] ?? 1);
 
-$category_id = $_GET['category'];
+$category_id = intval($_GET['category']);
+$category_id = mysqli_real_escape_string($link, $category_id);
+
+if (!in_array($category_id, $categories_ids)) {
+    header("Location: /404.php");
+}
 
 $lots = get_lot_by_category($link, $category_id, $cur_page, $pagination_limit);
 $count_lots = get_count_lot_by_category($link, $category_id);

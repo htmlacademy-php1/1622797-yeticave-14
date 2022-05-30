@@ -44,8 +44,8 @@ function validate_name(string $value): ?string
     if ($value === "") {
         return "Поле должно быть заполнено";
     }
-    if (mb_strlen($value) > 122) {
-        return "Количество не должно превышать 122 символов";
+    if (mb_strlen($value) > 255) {
+        return "Количество не должно превышать 255 символов";
     }
 
     return null;
@@ -62,8 +62,8 @@ function validate_description(string $value): ?string
     if ($value === "") {
         return "Поле должно быть заполнено";
     }
-    if (mb_strlen($value) > 500) {
-        return "Количество не должно превышать 500 символов";
+    if (mb_strlen($value) > 2000) {
+        return "Количество не должно превышать 2000 символов";
     }
 
     return null;
@@ -114,7 +114,7 @@ function validate_date(string $date): ?string
     }
     $timer = get_dt_range($date, 'now');
 
-    if ($timer < 24) {
+    if ($timer['hour'] < 24) {
         return "Указанная дата должна быть больше текущей даты, хотя бы на один день";
     }
 

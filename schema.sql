@@ -10,8 +10,8 @@ CREATE TABLE categories  (
 CREATE TABLE lots (
    id int AUTO_INCREMENT PRIMARY KEY,
    creation_time datetime NOT NULL,
-   name varchar(122) NOT NULL,
-   description varchar (500),
+   name varchar(255) NOT NULL,
+   description TEXT NOT NULL,
    img varchar(255),
    begin_price int NOT NULL,
    date_completion date,
@@ -32,10 +32,10 @@ CREATE TABLE bets (
 CREATE TABLE users (
   id int AUTO_INCREMENT PRIMARY KEY,
   creation_time datetime NOT NULL,
-  email varchar(64) NOT NULL UNIQUE,
+  email varchar(128) NOT NULL UNIQUE,
   name varchar(64) NOT NULL,
   password varchar(64) NOT NULL,
-  contact varchar(122) NOT NULL
+  contact varchar(500) NOT NULL
 );
 
 CREATE FULLTEXT INDEX lots_ft_search ON lots(name, description);

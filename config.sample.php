@@ -9,4 +9,6 @@ return [
     ],
 
     'pagination_limit' => 9,
+
+    'base_url' => 'http://test.ru'
 ];
