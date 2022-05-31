@@ -11,7 +11,7 @@ function validate_signup_form(mysqli $link, array $signup_form): array
     $errors = [
         'email' => validate_signup_email($link, $signup_form['email']),
         'password' => validate_signup_password($signup_form['password']),
-        'first_name' => validate_name($signup_form['first_name']),
+        'first_name' => validate_first_name($signup_form['first_name']),
         'contact' => validate_contact($signup_form['contact'])
     ];
 
@@ -36,8 +36,8 @@ function validate_signup_email(mysqli $link, string $email): ?string
     if (get_user_by_email($link, $email)) {
         return "E-mail используется другим пользователем";
     }
-    if (mb_strlen($email) > 128) {
-        return "Длина не должна превышать 128 символов";
+    if (mb_strlen($email) > 320) {
+        return "Длина не должна превышать 320 символов";
     }
 
     return null;
@@ -54,9 +54,24 @@ function validate_contact(string $value): ?string
     if ($value === '') {
         return "Поле необходимо заполнить";
     }
-    if (mb_strlen($value) > 500) {
-        return "Длина не должна превышать 500 символов";
+    return null;
+}
+
+
+/**
+ * Функция проверяет поле с Именем
+ * @param string value Проверяет значение на соответствие формату и количеству символов
+ * @return string|null Возвращает ошибки, если данные заполнены не верно
+ */
+function validate_first_name(string $value): ?string
+{
+    if ($value === "") {
+        return "Поле должно быть заполнено";
     }
+    if (mb_strlen($value) > 64) {
+        return "Количество не должно превышать 64 символов";
+    }
+
     return null;
 }
 

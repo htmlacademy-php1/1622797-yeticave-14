@@ -21,7 +21,7 @@ function get_post_val($name)
 function validate_form_lot(array $lot_form_data, array $category_ids, array $files): array
 {
     $errors = [
-        'name' => validate_name($lot_form_data['name']),
+        'name' => validate_lot_name($lot_form_data['name']),
         'category_id' => validate_category($lot_form_data['category_id'], $category_ids),
         'description' => validate_description($lot_form_data['description']),
         'img' => validate_img($files),
@@ -39,7 +39,7 @@ function validate_form_lot(array $lot_form_data, array $category_ids, array $fil
  * @param string value Проверяет значение на соответствие формату и количеству символов
  * @return string|null Возвращает ошибки, если данные заполнены не верно
  */
-function validate_name(string $value): ?string
+function validate_lot_name(string $value): ?string
 {
     if ($value === "") {
         return "Поле должно быть заполнено";
@@ -61,9 +61,6 @@ function validate_description(string $value): ?string
 {
     if ($value === "") {
         return "Поле должно быть заполнено";
-    }
-    if (mb_strlen($value) > 2000) {
-        return "Количество не должно превышать 2000 символов";
     }
 
     return null;
@@ -93,11 +90,15 @@ function validate_category(string $id, array $category_ids): ?string
  */
 function validate_price(string $price): ?string
 {
-    $price = intval($price);
+    if (!is_numeric($price)) {
+        return 'Введите целое число';
+    }
     if ($price <= 0) {
         return "Значение должно быть больше нуля";
     }
-
+    if (strlen($price) > 7) {
+        return "Значение должно быть не более 7 символов";
+    }
     return null;
 }
 

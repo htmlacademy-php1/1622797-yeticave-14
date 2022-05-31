@@ -18,13 +18,13 @@ if ($user_id === null) {
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $lot_form_data = filter_input_array(INPUT_POST, [
-        'name' => FILTER_DEFAULT,
-        'category_id' => FILTER_DEFAULT,
-        'description' => FILTER_DEFAULT,
-        'img' => FILTER_DEFAULT,
-        'begin_price' => FILTER_DEFAULT,
-        'bid_step' => FILTER_DEFAULT,
-        'date_completion' => FILTER_DEFAULT
+        'name' => FILTER_SANITIZE_FULL_SPECIAL_CHARS,
+        'category_id' => FILTER_SANITIZE_FULL_SPECIAL_CHARS,
+        'description' => FILTER_SANITIZE_FULL_SPECIAL_CHARS,
+        'img' => FILTER_SANITIZE_FULL_SPECIAL_CHARS,
+        'begin_price' => FILTER_SANITIZE_FULL_SPECIAL_CHARS,
+        'bid_step' => FILTER_SANITIZE_FULL_SPECIAL_CHARS,
+        'date_completion' => FILTER_SANITIZE_FULL_SPECIAL_CHARS
     ], true);
 
     $categories_id = array_column($categories, 'id');
