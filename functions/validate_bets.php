@@ -26,9 +26,11 @@ function validate_bets($price, array $lot_data): ?string
     if ($price === '') {
         return "Введите ставку";
     }
-
     if ($price <= 0) {
         return "Значение введено некорректно";
+    }
+    if (strlen($price) > 7) {
+        return "Значение должно быть не более 7 символов";
     }
 
     $cur_price = $lot_data['max_price'] ?? $lot_data['begin_price'];

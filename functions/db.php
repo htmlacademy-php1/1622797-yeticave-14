@@ -164,6 +164,8 @@ function add_lot(mysqli $link, array $lot_form_data, int $user_id): bool
     $lot_form_data['img'] = upload_image($_FILES);
     $lot_form_data['date_completion'] = date("Y-m-d H:i:s", strtotime($lot_form_data['date_completion']));
     $lot_form_data['user_id'] = $user_id;
+    $lot_form_data['begin_price'] = intval($lot_form_data['begin_price']);
+    $lot_form_data['bid_step'] = intval($lot_form_data['bid_step']);
 
     $sql = 'INSERT INTO lots(name, creation_time, category_id, description, img, begin_price, bid_step,
                  date_completion, user_id)

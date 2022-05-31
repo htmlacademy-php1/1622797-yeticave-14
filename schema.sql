@@ -32,10 +32,10 @@ CREATE TABLE bets (
 CREATE TABLE users (
   id int AUTO_INCREMENT PRIMARY KEY,
   creation_time datetime NOT NULL,
-  email varchar(128) NOT NULL UNIQUE,
+  email varchar(320) NOT NULL UNIQUE,
   name varchar(64) NOT NULL,
   password varchar(64) NOT NULL,
-  contact varchar(500) NOT NULL
+  contact TEXT NOT NULL
 );
 
 CREATE FULLTEXT INDEX lots_ft_search ON lots(name, description);
