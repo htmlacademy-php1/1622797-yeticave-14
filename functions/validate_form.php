@@ -96,8 +96,8 @@ function validate_price(string $price): ?string
     if ($price <= 0) {
         return "Значение должно быть больше нуля";
     }
-    if (strlen($price) > 7) {
-        return "Значение должно быть не более 7 символов";
+    if ($price > 100000000) {
+        return "Цена должна быть не больше 100 000 000 миллионов";
     }
     return null;
 }
