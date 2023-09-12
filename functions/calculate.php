@@ -15,8 +15,8 @@ function get_dt_range(string $closetime, string $curtime): array
         return $interval;
     }
     $hours = floor($dt_diff / 3600);
-    $minuts = floor($dt_diff % 3600 / 60);
-    $interval = ['hour' => $hours, 'minute' => $minuts];
+    $minutes = floor($dt_diff % 3600 / 60);
+    $interval = ['hour' => $hours, 'minute' => $minutes];
 
     return $interval;
 }

@@ -2,7 +2,7 @@
 
 /**
  * Функция осуществляет соединение с базой данных
- * @param array config Передает конфиг данных для соединения
+ * @param array $config Передает конфиг данных для соединения
  * @return mysqli Возвращает удачное соединение или ошибку
  */
 function connect_db(array $config): mysqli
@@ -77,7 +77,7 @@ function get_lots(mysqli $link): array
 
 /**
  * Функция по выбору конкретного лота из строки запроса
- * @param mysqli link Отправлять запрос в БД на получение лота
+ * @param mysqli $link Отправлять запрос в БД на получение лота
  * @param int $lot_id Переменная со строкой запроса
  * @return array|null Возвращает лот с конкретным id
  */
@@ -154,9 +154,9 @@ function db_get_prepare_stmt($link, $sql, $data = [])
 
 /**
  * Функция осуществляет добавление нового лота
- * @param mysqli link Передает соединение с БД
- * @param array lot_form_data Передает данные введенные из формы
- * @param mixed files Передает картинку из формы
+ * @param mysqli $link Передает соединение с БД
+ * @param array $lot_form_data Передает данные введенные из формы
+ * @param int $user_id Передает id пользователя
  * @return bool Возвращает удачное добавление лота или ошибку
  */
 function add_lot(mysqli $link, array $lot_form_data, int $user_id): bool
@@ -184,9 +184,9 @@ function add_lot(mysqli $link, array $lot_form_data, int $user_id): bool
 
 
 /**
- * Функция проверяет email на повторение с уже сущестующим в БД
- * @param mysqli link Соединение с БД
- * @param string email Передает введеный e-mail
+ * Функция проверяет email на повторение с уже существующим в БД
+ * @param mysqli $link Соединение с БД
+ * @param string $email Передает введеный e-mail
  * @return array|null Возвращает значение e-mail из существующих в таблицу users
  */
 function get_user_by_email(mysqli $link, string $email): ?array
@@ -205,9 +205,9 @@ function get_user_by_email(mysqli $link, string $email): ?array
 
 
 /**
- * Функция добавляет нового зарегистрированого юзера в БД
- * @param mysqli link Соединение с БД
- * @param array signup_form Массив с данными из формы
+ * Функция добавляет нового зарегистрированного юзера в БД
+ * @param mysqli $link Соединение с БД
+ * @param array $signup_form Массив с данными из формы
  * @return bool Возвращает удачное добавление юзера в БД или ошибку
  */
 function add_user(mysqli $link, array $signup_form): bool
@@ -230,10 +230,10 @@ function add_user(mysqli $link, array $signup_form): bool
 
 /**
  * Функция осуществляет поиск по столбцам name, description в таблице лотов с ограничением по количеству элементов
- * @param mysqli link Соединение с БД
- * @param string search Принимает поисковый запрос
- * @param int cur_page Текущая страница
- * @param int pagination_limit Лимит на количество выведенных лотов на странице
+ * @param mysqli $link Соединение с БД
+ * @param string $search Принимает поисковый запрос
+ * @param int $cur_page Текущая страница
+ * @param int $pagination_limit Лимит на количество выведенных лотов на странице
  * @return array Возвращает массив с последними новыми лотами или ошибку
  */
 function get_lot_by_search(mysqli $link, string $search, int $cur_page, int $pagination_limit): array
@@ -262,8 +262,8 @@ function get_lot_by_search(mysqli $link, string $search, int $cur_page, int $pag
 
 /**
  * Функция получает количество лотов найденное поиском
- * @param mysqli link Соединение с БД
- * @param string search Принимает поисковый запрос
+ * @param mysqli $link Соединение с БД
+ * @param string $search Принимает поисковый запрос
  * @return int Возвращает количество лотов из БД или ошибку
  */
 function get_count_lots_from_search(mysqli $link, string $search): int
@@ -366,7 +366,7 @@ function get_bets_user(mysqli $link, int $user_id): array
 
 
 /**
- * Фукнция получает лоты по категориям
+ * Функция получает лоты по категориям
  * @param mysqli $link Соединение с БД
  * @param string $category_id Получает id категории
  * @param int $cur_page Получает текущую страницу

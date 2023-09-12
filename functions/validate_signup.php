@@ -2,8 +2,8 @@
 
 /**
  * Функция проверяет все данные введенные в форму регистрации
- * @param mysqli link Соединение с БД
- * @param array signup_form Массив с данными из полей формы
+ * @param mysqli $link Соединение с БД
+ * @param array $signup_form Массив с данными из полей формы
  * @return array Возвращает массив с данными из формы
  */
 function validate_signup_form(mysqli $link, array $signup_form): array
@@ -21,9 +21,9 @@ function validate_signup_form(mysqli $link, array $signup_form): array
 
 /**
  * Функция проверяет e-mail на корректность и уникальность
- * @param mysqli link Соединение с БД
- * @param string email Переменная с e-mail
- * @return string|null Вовзращает ошибки если заполнено неверно или e-mail не уникален
+ * @param mysqli $link Соединение с БД
+ * @param string $email Переменная с e-mail
+ * @return string|null Возвращает ошибки если заполнено неверно или e-mail не уникален
  */
 function validate_signup_email(mysqli $link, string $email): ?string
 {
@@ -46,7 +46,7 @@ function validate_signup_email(mysqli $link, string $email): ?string
 
 /**
  * Функция проверяет на заполнение поля Контакты
- * @param string value Значение полей
+ * @param string $value Значение полей
  * @return string|null Возвращает ошибку в случае незаполненного поля
  */
 function validate_contact(string $value): ?string
@@ -60,7 +60,7 @@ function validate_contact(string $value): ?string
 
 /**
  * Функция проверяет поле с Именем
- * @param string value Проверяет значение на соответствие формату и количеству символов
+ * @param string $value Проверяет значение на соответствие формату и количеству символов
  * @return string|null Возвращает ошибки, если данные заполнены не верно
  */
 function validate_first_name(string $value): ?string
