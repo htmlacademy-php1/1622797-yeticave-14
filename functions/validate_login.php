@@ -2,8 +2,8 @@
 
 /**
  * Функция проверяет все данные введенные в форму входа в учетную запись
- * @param mysqli link Соединение с БД
- * @param array login_form Массив с данными из формы
+ * @param mysqli $link Соединение с БД
+ * @param array $login_form Массив с данными из формы
  * @return array Возвращает массив с данными из формы
  */
 function validate_login_form(mysqli $link, array $login_form): array
@@ -19,7 +19,7 @@ function validate_login_form(mysqli $link, array $login_form): array
 
 /**
  * Функция проверяет на правильное заполнение поля с e-mail
- * @param string email Данные из поля с e-mail
+ * @param string $email Данные из поля с e-mail
  * @return string|null Возвращает ошибки, если форма заполнена неверно
  */
 function validate_login_email(string $email): ?string
@@ -40,7 +40,7 @@ function validate_login_email(string $email): ?string
 
 /**
  * Функция проверяет на правильное заполнение поля с паролем
- * @param mysqli link Соединение с БД
+ * @param mysqli $link Соединение с БД
  * @param string $email
  * @param string $password
  * @return string|null Возвращает ошибку, если пароль не совпадает

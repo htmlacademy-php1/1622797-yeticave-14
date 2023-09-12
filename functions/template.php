@@ -60,7 +60,7 @@ function lot_cost(int $price): string
  * @param string $two Форма множественного числа для 2, 3, 4: яблока, часа, минуты
  * @param string $many Форма множественного числа для остальных чисел
  *
- * @return string Рассчитанная форма множественнго числа
+ * @return string Рассчитанная форма множественного числа
  */
 function get_noun_plural_form(int $number, string $one, string $two, string $many): string
 {
@@ -90,7 +90,7 @@ function get_noun_plural_form(int $number, string $one, string $two, string $man
 /**
  * Функция приводит значение к человокочитаемому формату времени
  * @param string $date Принимает дату в прошлом
- * @param string $cur_date Принимает текущаю дату
+ * @param string $cur_date Принимает текущую дату
  * @return string|null Возвращает дату и время в человекочитаемом виде
  */
 function get_time_bet(string $date, string $cur_date): ?string

@@ -12,8 +12,8 @@ function get_user_id_session(): ?string
 
 /**
  * Функция записывает в массив SESSION id и имя пользователя
- * @param mysqli link Соединение с БД
- * @param array login_form Массив с данными из формы входа
+ * @param mysqli $link Соединение с БД
+ * @param array $login_form Массив с данными из формы входа
  * @return bool Если пользователь найден, то в массив SESSION записывается id и имя пользователя или выдает ошибку
  */
 function authentication(mysqli $link, array $login_form): bool
